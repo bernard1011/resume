@@ -1,0 +1,20 @@
+@import "tailwindcss";
+
+body 
+{
+    background: #19072e;
+    padding: 0 10px;
+}
+
+@keyframes bounceFade {
+  0%, 100% { opacity: 0.2; transform: translateY(-4px); }
+  50%       { opacity: 1;   transform: translateY(4px);  }
+}
+
+.arrows-animate > * {
+  animation: bounceFade 1.5s ease-in-out infinite;
+}
+
+.arrows-animate > *:nth-child(2) {
+  animation-delay: 200ms;
+}
