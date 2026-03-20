@@ -109,7 +109,7 @@ const Menu = () => {
                   padding: "16px 22px", width: "100%",
                   background: isActive ? "rgba(124,58,237,0.18)" : "transparent",
                   border: "none",
-                  borderBottom: index < MENU_ITEMS.length - 1 ? "1px solid rgba(139,92,246,0.15)" : "none",
+                 
                   borderLeft: isActive ? "3px solid #a78bfa" : "3px solid transparent",
                   color: isActive ? "#c4b5fd" : "rgba(226,232,240,0.9)",
                   fontSize: "1.05rem", fontWeight: isActive ? 600 : 500,
