@@ -4,7 +4,7 @@ import Tail from "../assets/tailwind-icon.svg";
 const LibsAndFrameworks = () => {
   return (
     <div className="flex flex-col gap-8">
-      {/* Libraries — mt aligns "Libraries:" title so icon lines up with card icon on desktop */}
+     
       <div className="flex flex-col gap-5">
         <h2 className="text-gray-50 font-bold text-3xl md:mt-[56px]">Libraries:</h2>
         <div className="flex items-center gap-7">
@@ -19,7 +19,7 @@ const LibsAndFrameworks = () => {
         </p>
       </div>
 
-      {/* Frameworks */}
+     
       <div className="flex flex-col gap-5">
         <h2 className="text-gray-50 font-bold text-3xl">Frameworks:</h2>
         <div className="flex items-center gap-7">

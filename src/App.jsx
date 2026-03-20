@@ -12,7 +12,7 @@ function App() {
 
   return (
     <div className="relative overflow-hidden">
-      {/* Паралакс фон */}
+      
       <motion.div
         className="-z-10 pointer-events-none"
         style={{ y: bgY, top: "-20%", bottom: "-20%", left: 0, right: 0, position: "fixed" }}
@@ -26,31 +26,38 @@ function App() {
         />
       </motion.div>
 
-      {/* Контент — px-6 на мобільному, більше на десктопі */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5, ease: "easeOut" }}
         className="relative flex flex-col gap-12 max-w-screen-lg mx-auto px-6 sm:px-10 md:px-8 lg:px-16"
       >
-        <FadeInSection>
-          <HeaderSection />
-        </FadeInSection>
+        <section id="home">
+          <FadeInSection>
+            <HeaderSection />
+          </FadeInSection>
+        </section>
 
-        <FadeInSection delay={0.1}>
-          <div className="md:grid md:grid-cols-2 md:gap-12 md:items-start flex flex-col gap-12">
-            <Technologies />
-            <LibsAndFrameworks />
-          </div>
-        </FadeInSection>
+        <section id="about">
+          <FadeInSection delay={0.1}>
+            <div className="md:grid md:grid-cols-2 md:gap-12 md:items-start flex flex-col gap-12">
+              <Technologies />
+              <LibsAndFrameworks />
+            </div>
+          </FadeInSection>
+        </section>
 
-        <FadeInSection delay={0.2}>
-          <MyProj />
-        </FadeInSection>
+        <section id="projects">
+          <FadeInSection delay={0.2}>
+            <MyProj />
+          </FadeInSection>
+        </section>
 
-        <FadeInSection delay={0.1}>
-          <Contact />
-        </FadeInSection>
+        <section id="contact">
+          <FadeInSection delay={0.1}>
+            <Contact />
+          </FadeInSection>
+        </section>
       </motion.div>
     </div>
   );

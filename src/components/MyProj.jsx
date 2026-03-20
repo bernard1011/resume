@@ -1,4 +1,4 @@
-import Proj from "../assets/concat.svg";
+import ProjSec from "../assets/projsec.svg";
 import RobH from "../assets/robot.svg";
 import SecP from "../assets/htmlcss.svg";
 import KnowladgeCard from "./ui/KnowladgeCard";
@@ -26,10 +26,9 @@ const MyProj = () => {
   return (
     <section className="flex flex-col">
       <div className="flex items-center gap-5 mb-5">
-        <img src={Proj} alt="my projects" className="w-full max-w-28" />
+        <img src={ProjSec} alt="my projects" className="w-full max-w-28" />
         <h2 className="text-gray-50 text-3xl font-bold">My Projects:</h2>
       </div>
-      {/* items-stretch — однакова висота карток */}
       <div className="md:grid md:grid-cols-2 md:gap-5 md:items-stretch flex flex-col gap-5">
         {myproj.map((item) => (
           <KnowladgeCard

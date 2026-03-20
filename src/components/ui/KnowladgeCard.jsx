@@ -1,23 +1,68 @@
-import ProjBtn from "./ProjBtn";
+import NeonButton from "./NeonButton";
+import { ArrowRight } from "lucide-react";
 
 const KnowladgeCard = (prop) => {
   return (
-    <a href={prop.url} target="_blank" className="h-full">
+    <div className="h-full">
       <div
-        className={`backdrop-blur-md border border-indigo-900/30 shadow-2xl bg-linear-to-br from-white/20 to-indigo-950/50 rounded-3xl w-full h-full px-3 py-5 flex flex-col gap-3`}
+        style={{
+          background: "rgba(124,58,237,0.07)",
+          border: "1px solid rgba(139,92,246,0.25)",
+          borderRadius: "20px",
+          padding: "20px 18px",
+          display: "flex",
+          flexDirection: "column",
+          gap: "14px",
+          height: "100%",
+          transition: "all 0.25s ease",
+        }}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.borderColor = "rgba(139,92,246,0.6)";
+          e.currentTarget.style.boxShadow = "0 0 28px rgba(124,58,237,0.35), 0 0 8px rgba(139,92,246,0.15) inset";
+          e.currentTarget.style.background = "rgba(124,58,237,0.13)";
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.borderColor = "rgba(139,92,246,0.25)";
+          e.currentTarget.style.boxShadow = "none";
+          e.currentTarget.style.background = "rgba(124,58,237,0.07)";
+        }}
       >
-        <div className="flex items-center gap-7">
-          <img src={prop.img} alt={prop.name} className="w-24" />
-          <h3 className="text-gray-50 text-2xl font-bold">{prop.name}</h3>
+       
+        <div style={{ display: "flex", alignItems: "center", gap: "18px" }}>
+          <img
+            src={prop.img}
+            alt={prop.name}
+            style={{ width: 76, height: 76, objectFit: "contain", flexShrink: 0 }}
+          />
+          <h3 style={{ color: "#f1f5f9", fontSize: "1.35rem", fontWeight: 700, margin: 0 }}>
+            {prop.name}
+          </h3>
         </div>
-        <div className="text-gray-50 text-lg flex-1">{prop.description}</div>
+
+   
+        <div style={{ height: "1px", background: "rgba(139,92,246,0.15)" }} />
+
+    
+        <p style={{ color: "rgba(209,213,219,0.82)", fontSize: "0.95rem", lineHeight: 1.65, flex: 1, margin: 0 }}>
+          {prop.description}
+        </p>
+
+      
         {prop.url && (
-          <div>
-            <ProjBtn />
+          <div style={{ paddingTop: "4px" }}>
+            <NeonButton
+              variant="primary"
+              size="sm"
+              href={prop.url}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              View Project <ArrowRight size={13} />
+            </NeonButton>
           </div>
         )}
       </div>
-    </a>
+    </div>
   );
 };
 
