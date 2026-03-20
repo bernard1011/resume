@@ -1,9 +1,14 @@
 @import "tailwindcss";
 
-body 
-{
-    background: #19072e;
-    padding: 0 10px;
+body {
+  background: #19072e;
+  padding: 0 10px;
+}
+
+@media (min-width: 768px) {
+  body {
+    padding: 0 24px;
+  }
 }
 
 @keyframes bounceFade {
@@ -18,7 +23,6 @@ body
 .arrows-animate > *:nth-child(2) {
   animation-delay: 200ms;
 }
-
 
 @keyframes slideInRight {
   from { transform: translateX(100%); opacity: 0; }
