@@ -24,6 +24,15 @@ body {
   animation-delay: 200ms;
 }
 
+.arrows-animate path:nth-child(1) {
+  animation: bounceFade 1.5s ease-in-out infinite;
+}
+
+.arrows-animate path:nth-child(2) {
+  animation: bounceFade 1.5s ease-in-out infinite;
+  animation-delay: 200ms;
+}
+
 @keyframes slideInRight {
   from { transform: translateX(100%); opacity: 0; }
   to   { transform: translateX(0);    opacity: 1; }
@@ -43,13 +52,13 @@ body {
 }
 
 @keyframes slideOutLeft {
-  from { opacity: 1; }
-  to   { opacity: 0; }
+  from { transform: translateX(0);     opacity: 1; }
+  to   { transform: translateX(-100%); opacity: 0; }
 }
 
 @keyframes slideOutRight {
-  from { opacity: 1; }
-  to   { opacity: 0; }
+  from { transform: translateX(0);    opacity: 1; }
+  to   { transform: translateX(100%); opacity: 0; }
 }
 
 .slide-out-left {
