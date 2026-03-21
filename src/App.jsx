@@ -1,6 +1,7 @@
 import HeaderSection from "./components/HeaderSection";
 import Technologies from "./components/Technologies";
 import LibsAndFrameworks from "./components/LibsAndFrameworks";
+import AiUsage from "./components/AiUsage";
 import MyProj from "./components/MyProj";
 import Contact from "./components/Contact";
 import FadeInSection from "./components/ui/FadeInSection";
@@ -40,9 +41,12 @@ function App() {
 
         <section id="about">
           <FadeInSection delay={0.1}>
-            <div className="md:grid md:grid-cols-2 md:gap-12 md:items-start flex flex-col gap-12">
-              <Technologies />
-              <LibsAndFrameworks />
+            <div className="flex flex-col gap-12">
+              <div className="md:grid md:grid-cols-2 md:gap-12 md:items-start flex flex-col gap-12">
+                <Technologies />
+                <LibsAndFrameworks />
+              </div>
+              <AiUsage />
             </div>
           </FadeInSection>
         </section>
