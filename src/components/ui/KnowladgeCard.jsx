@@ -9,10 +9,10 @@ const KnowladgeCard = (prop) => {
           background: "rgba(124,58,237,0.07)",
           border: "1px solid rgba(139,92,246,0.25)",
           borderRadius: "20px",
-          padding: "20px 18px",
+          padding: "28px 24px",
           display: "flex",
           flexDirection: "column",
-          gap: "14px",
+          gap: "18px",
           height: "100%",
           transition: "all 0.25s ease",
         }}
@@ -32,11 +32,11 @@ const KnowladgeCard = (prop) => {
           <img
             src={prop.img}
             alt={prop.name}
-            style={{ width: 76, height: 76, objectFit: "contain", flexShrink: 0 }}
+            style={{ width: 96, height: 96, objectFit: "contain", flexShrink: 0 }}
           />
-          {prop.img2 && <img src={prop.img2} alt={prop.name} className="absolute top-0 left-10 -z-1 w-[76px]"/>}
+          {prop.img2 && <img src={prop.img2} alt={prop.name} className="absolute top-0 left-10 -z-1 w-[96px]"/>}
           
-          <h3 style={{ color: "#f1f5f9", fontSize: "1.35rem", fontWeight: 700, margin: 0 }}>
+          <h3 style={{ color: "#f1f5f9", fontSize: "1.5rem", fontWeight: 700, margin: 0 }}>
             {prop.name}
           </h3>
         </div>
@@ -45,7 +45,7 @@ const KnowladgeCard = (prop) => {
         <div style={{ height: "1px", background: "rgba(139,92,246,0.15)" }} />
 
     
-        <p style={{ color: "rgba(209,213,219,0.82)", fontSize: "0.95rem", lineHeight: 1.65, flex: 1, margin: 0 }}>
+        <p style={{ color: "rgba(209,213,219,0.82)", fontSize: "1.1rem", lineHeight: 1.65, flex: 1, margin: 0 }}>
           {prop.description}
         </p>
 
