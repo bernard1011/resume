@@ -1,4 +1,5 @@
 import LinuxI from "../assets/linux.svg";
+import { neonCardStyle, neonHoverHandlers } from "../utils/neonCard";
 
 const skills = [
   "Linux terminal: navigation and command-line tools",
@@ -24,14 +25,14 @@ const LibsAndFrameworks = () => {
 
       <div
         style={{
-          background: "rgba(124,58,237,0.07)",
-          border: "1px solid rgba(139,92,246,0.25)",
+          ...neonCardStyle,
           borderRadius: "16px",
           padding: "20px 24px",
           display: "flex",
           flexDirection: "column",
           gap: "10px",
         }}
+        {...neonHoverHandlers}
       >
         {skills.map((skill, i) => (
           <div key={i} style={{ display: "flex", alignItems: "center", gap: "12px" }}>

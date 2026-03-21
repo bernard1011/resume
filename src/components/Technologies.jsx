@@ -58,10 +58,10 @@ const Technologies = () => {
 
   return (
     <div className="flex flex-col gap-5">
-      <h2 className="text-gray-50 font-bold text-3xl">Knowledges:</h2>
+      <h2 className="text-gray-50 font-bold text-3xl">Web Knowledges:</h2>
 
       <div
-        style={{ display: "grid", padding: "4px", overflow: "hidden", borderRadius: "20px" }}
+        style={{ display: "grid", padding: "4px" }}
         onTouchStart={onTouchStart}
         onTouchMove={onTouchMove}
         onTouchEnd={onTouchEnd}

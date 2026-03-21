@@ -122,7 +122,7 @@ const HeaderSection = () => {
         transition={{ delay: 0.9, duration: 0.5 }}
         className="w-full flex justify-center pt-8 md:pt-12"
       >
-        <ArrowDown className="arrows-animate h-7 text-white overflow-visible" />
+        <ArrowDown className="arrows-animate h-7 overflow-visible" style={{ color: "#a78bfa", filter: "drop-shadow(0 0 6px rgba(139,92,246,0.8))" }} />
       </motion.div>
     </>
   )
