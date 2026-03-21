@@ -28,12 +28,14 @@ const KnowladgeCard = (prop) => {
         }}
       >
        
-        <div style={{ display: "flex", alignItems: "center", gap: "18px" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: prop.img2 ? "56px" : "18px", position: "relative"}}>
           <img
             src={prop.img}
             alt={prop.name}
             style={{ width: 76, height: 76, objectFit: "contain", flexShrink: 0 }}
           />
+          {prop.img2 && <img src={prop.img2} alt={prop.name} className="absolute top-0 left-10 -z-1 w-[76px]"/>}
+          
           <h3 style={{ color: "#f1f5f9", fontSize: "1.35rem", fontWeight: 700, margin: 0 }}>
             {prop.name}
           </h3>

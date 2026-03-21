@@ -6,7 +6,7 @@ const LibsAndFrameworks = () => {
     <div className="flex flex-col gap-8">
      
       <div className="flex flex-col gap-5">
-        <h2 className="text-gray-50 font-bold text-3xl md:mb-[56px]">Libraries:</h2>
+        <h2 className="text-gray-50 font-bold text-3xl ">Libraries:</h2>
         <div className="flex items-center gap-7">
           <img src={ReactI} alt="react" className="w-24" />
           <h3 className="text-gray-50 text-2xl font-bold">React</h3>
