@@ -9,7 +9,7 @@ const HeaderSection = () => {
     <>
       <Menu />
 
-      <section className="relative mt-16 md:mt-24 flex flex-col items-center md:flex-row md:items-center md:gap-16 min-h-[60vh] md:min-h-[70vh]">
+      <section className="relative mt-16 md:mt-24 flex flex-col items-center md:flex-row md:items-center md:gap-16 min-h-[calc(100svh-8rem)] md:min-h-[70vh]">
 
 
         <div className="absolute -top-10 left-1/2 -translate-x-1/2 md:left-0 md:translate-x-0 w-72 h-72 md:w-80 md:h-80 rounded-full pointer-events-none"
@@ -122,7 +122,7 @@ const HeaderSection = () => {
         transition={{ delay: 0.9, duration: 0.5 }}
         className="w-full flex justify-center pt-8 md:pt-12"
       >
-        <ArrowDown className="arrows-animate h-7 overflow-visible" style={{ color: "#a78bfa", filter: "drop-shadow(0 0 6px rgba(139,92,246,0.8))" }} />
+        <ArrowDown className="arrows-animate h-7 text-white overflow-visible" />
       </motion.div>
     </>
   )
