@@ -22,7 +22,7 @@ function App() {
           className="absolute inset-0"
           style={{
             background:
-              "radial-gradient(ellipse at 20% 20%, #3b0764 0%, transparent 60%), radial-gradient(ellipse at 80% 80%, #1e1b4b 0%, transparent 60%)",
+              "radial-gradient(ellipse at 20% 20%, #4c474f 0%, transparent 50%), radial-gradient(ellipse at 80% 80%, #5b5a63 0%, transparent 50%)",
           }}
         />
       </motion.div>

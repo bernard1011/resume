@@ -1,7 +1,7 @@
-import Menu from "./ui/Menu"
-import Photo from "../assets/images/photo.jpg"
-import NeonButton from "./ui/NeonButton"
-import { motion } from "framer-motion"
+import Menu from "./ui/Menu";
+import Photo from "../assets/images/photo.jpg";
+import NeonButton from "./ui/NeonButton";
+import { motion } from "framer-motion";
 
 const HeaderSection = () => {
   return (
@@ -13,11 +13,11 @@ const HeaderSection = () => {
         style={{ minHeight: "100svh" }}
       >
         <div className="flex-1 mt-16 md:mt-24 flex flex-col items-center md:flex-row md:items-center md:gap-16 relative">
-
           <div
             className="absolute -top-10 left-1/2 -translate-x-1/2 md:left-0 md:translate-x-0 w-72 h-72 md:w-80 md:h-80 rounded-full pointer-events-none"
             style={{
-              background: "radial-gradient(circle, rgba(139, 92, 246, 0.35) 0%, transparent 70%)",
+              background:
+                "radial-gradient(circle, rgba(0, 0, 0, 0.4) 0%, transparent 70%)",
               filter: "blur(30px)",
               zIndex: 0,
             }}
@@ -35,9 +35,10 @@ const HeaderSection = () => {
                 width: "clamp(180px, 30vw, 240px)",
                 height: "clamp(180px, 30vw, 240px)",
                 border: "3px solid transparent",
-                background: "linear-gradient(#19072e, #19072e) padding-box, conic-gradient(from 180deg, #7c3aed, #4f46e5, #a855f7, #7c3aed) border-box",
+                background:
+                  "linear-gradient(#0a0a0a, #0a0a0a) padding-box, conic-gradient(from 180deg, #2a2a2a, #1a1a1a, #3a3a3a, #2a2a2a) border-box",
                 borderRadius: "9999px",
-                boxShadow: "0 0 30px rgba(124,58,237,0.4)",
+                boxShadow: "0 0 30px rgba(0,0,0,0.5)",
               }}
             >
               <img
@@ -59,9 +60,9 @@ const HeaderSection = () => {
               <span
                 className="text-xs font-semibold tracking-widest uppercase px-3 py-1 rounded-full"
                 style={{
-                  background: "rgba(124, 58, 237, 0.18)",
-                  border: "1px solid rgba(139,92,246,0.35)",
-                  color: "#c4b5fd",
+                  background: "rgba(0, 0, 0, 0.25)",
+                  border: "1px solid rgba(255,255,255,0.15)",
+                  color: "rgba(255,255,255,0.85)",
                   letterSpacing: "0.15em",
                 }}
               >
@@ -74,13 +75,18 @@ const HeaderSection = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.25 }}
               className="font-bold text-white"
-              style={{ fontSize: "clamp(2rem, 5vw, 3.5rem)", lineHeight: 1.1, letterSpacing: "-0.02em" }}
+              style={{
+                fontSize: "clamp(2rem, 5vw, 3.5rem)",
+                lineHeight: 1.1,
+                letterSpacing: "-0.02em",
+              }}
             >
               Hello! 👋
               <span
                 className="block mt-1"
                 style={{
-                  background: "linear-gradient(90deg, #fff 0%, #c4b5fd 60%, #818cf8 100%)",
+                  background:
+                    "linear-gradient(90deg, #fff 0%, #e0e0e0 60%, #c0c0c0 100%)",
                   WebkitBackgroundClip: "text",
                   WebkitTextFillColor: "transparent",
                   backgroundClip: "text",
@@ -97,8 +103,14 @@ const HeaderSection = () => {
               className="text-base md:text-lg leading-relaxed max-w-md"
               style={{ color: "rgba(209,213,219,0.85)" }}
             >
-              I am a <span style={{ color: "#c4b5fd", fontWeight: 600 }}>Frontend Developer</span> from Ukraine
-              who is passionate about web technologies and continuous learning.
+              I am a{" "}
+              <span
+                style={{ color: "rgba(255,255,255,0.85)", fontWeight: 600 }}
+              >
+                Frontend Developer
+              </span>{" "}
+              from Ukraine who is passionate about web technologies and
+              continuous learning.
             </motion.p>
 
             <motion.div
@@ -134,29 +146,31 @@ const HeaderSection = () => {
           >
             <path
               d="M2 2L14 13L26 2"
-              stroke="#7c3aed"
+              stroke="rgba(0,0,0,0.6)"
               strokeWidth="2.5"
               strokeLinecap="round"
               strokeLinejoin="round"
             />
             <path
               d="M2 14L14 25L26 14"
-              stroke="#7c3aed"
+              stroke="rgba(0,0,0,0.6)"
               strokeWidth="2.5"
               strokeLinecap="round"
               strokeLinejoin="round"
               opacity="0.6"
             />
             <filter id="glow">
-              <feGaussianBlur stdDeviation="2" result="blur"/>
-              <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+              <feGaussianBlur stdDeviation="2" result="blur" />
+              <feMerge>
+                <feMergeNode in="blur" />
+                <feMergeNode in="SourceGraphic" />
+              </feMerge>
             </filter>
           </svg>
         </motion.div>
-
       </section>
     </>
-  )
-}
+  );
+};
 
-export default HeaderSection
+export default HeaderSection;

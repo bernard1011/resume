@@ -1,8 +1,9 @@
 @import "tailwindcss";
 
 body {
-  background: #19072e;
+  background: linear-gradient(180deg, #e8e8ea 0%, #c9c9cd 50%, #a8a8ac 100%);
   padding: 0 10px;
+  min-height: 100vh;
 }
 
 @media (min-width: 768px) {
@@ -12,8 +13,15 @@ body {
 }
 
 @keyframes bounceFade {
-  0%, 100% { opacity: 0.2; transform: translateY(-4px); }
-  50%       { opacity: 1;   transform: translateY(4px);  }
+  0%,
+  100% {
+    opacity: 0.2;
+    transform: translateY(-4px);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(4px);
+  }
 }
 
 .arrows-animate > * {
@@ -34,13 +42,25 @@ body {
 }
 
 @keyframes slideInRight {
-  from { transform: translateX(100%); opacity: 0; }
-  to   { transform: translateX(0);    opacity: 1; }
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
 }
 
 @keyframes slideInLeft {
-  from { transform: translateX(-100%); opacity: 0; }
-  to   { transform: translateX(0);     opacity: 1; }
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
 }
 
 .slide-in-right {
@@ -52,13 +72,25 @@ body {
 }
 
 @keyframes slideOutLeft {
-  from { transform: translateX(0);     opacity: 1; }
-  to   { transform: translateX(-100%); opacity: 0; }
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
 }
 
 @keyframes slideOutRight {
-  from { transform: translateX(0);    opacity: 1; }
-  to   { transform: translateX(100%); opacity: 0; }
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(100%);
+    opacity: 0;
+  }
 }
 
 .slide-out-left {

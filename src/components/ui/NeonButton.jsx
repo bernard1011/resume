@@ -1,44 +1,67 @@
-
 const VARIANTS = {
   primary: {
-    background: "linear-gradient(135deg, #7c3aed 0%, #4f46e5 100%)",
-    border: "1px solid rgba(139,92,246,0.0)",
+    background: "linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%)",
+    border: "1px solid rgba(255,255,255,0.12)",
     color: "#fff",
-    boxShadow: "0 0 18px rgba(124,58,237,0.55), 0 0 6px rgba(139,92,246,0.3) inset",
-    hoverShadow: "0 0 32px rgba(124,58,237,0.85), 0 0 10px rgba(167,139,250,0.4) inset",
-    hoverBg: "linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%)",
+    boxShadow: "0 0 18px rgba(0,0,0,0.5), 0 0 6px rgba(255,255,255,0.15) inset",
+    hoverShadow:
+      "0 0 32px rgba(0,0,0,0.7), 0 0 10px rgba(255,255,255,0.25) inset",
+    hoverBg: "linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%)",
   },
   secondary: {
-    background: "rgba(124,58,237,0.08)",
-    border: "1px solid rgba(139,92,246,0.45)",
-    color: "#c4b5fd",
-    boxShadow: "0 0 10px rgba(124,58,237,0.15)",
-    hoverShadow: "0 0 22px rgba(124,58,237,0.45), 0 0 8px rgba(139,92,246,0.2) inset",
-    hoverBg: "rgba(124,58,237,0.18)",
+    background: "rgba(0,0,0,0.2)",
+    border: "1px solid rgba(255,255,255,0.15)",
+    color: "rgba(255,255,255,0.85)",
+    boxShadow: "0 0 10px rgba(0,0,0,0.3)",
+    hoverShadow:
+      "0 0 22px rgba(0,0,0,0.5), 0 0 8px rgba(255,255,255,0.15) inset",
+    hoverBg: "rgba(0,0,0,0.35)",
   },
   ghost: {
     background: "transparent",
-    border: "1px solid rgba(139,92,246,0.2)",
-    color: "rgba(196,181,253,0.75)",
+    border: "1px solid rgba(255,255,255,0.1)",
+    color: "rgba(255,255,255,0.7)",
     boxShadow: "none",
-    hoverShadow: "0 0 16px rgba(124,58,237,0.3)",
-    hoverBg: "rgba(124,58,237,0.1)",
+    hoverShadow: "0 0 16px rgba(0,0,0,0.4)",
+    hoverBg: "rgba(0,0,0,0.15)",
   },
   icon: {
-    background: "rgba(255,255,255,0.07)",
-    border: "1px solid rgba(139,92,246,0.3)",
+    background: "rgba(255,255,255,0.05)",
+    border: "1px solid rgba(255,255,255,0.1)",
     color: "#e2e8f0",
-    boxShadow: "0 0 8px rgba(124,58,237,0.2)",
-    hoverShadow: "0 0 20px rgba(124,58,237,0.55)",
-    hoverBg: "rgba(124,58,237,0.2)",
+    boxShadow: "0 0 8px rgba(0,0,0,0.3)",
+    hoverShadow: "0 0 20px rgba(0,0,0,0.5)",
+    hoverBg: "rgba(0,0,0,0.2)",
   },
 };
 
 const SIZES = {
-  sm: { padding: "6px 14px",  fontSize: "0.8rem",  borderRadius: "10px", minHeight: "32px" },
-  md: { padding: "9px 20px",  fontSize: "0.9rem",  borderRadius: "12px", minHeight: "40px" },
-  lg: { padding: "12px 28px", fontSize: "1rem",    borderRadius: "14px", minHeight: "48px" },
-  icon: { padding: "0", width: "40px", height: "40px", borderRadius: "50%", fontSize: "1.1rem", minHeight: "40px" },
+  sm: {
+    padding: "6px 14px",
+    fontSize: "0.8rem",
+    borderRadius: "10px",
+    minHeight: "32px",
+  },
+  md: {
+    padding: "9px 20px",
+    fontSize: "0.9rem",
+    borderRadius: "12px",
+    minHeight: "40px",
+  },
+  lg: {
+    padding: "12px 28px",
+    fontSize: "1rem",
+    borderRadius: "14px",
+    minHeight: "48px",
+  },
+  icon: {
+    padding: "0",
+    width: "40px",
+    height: "40px",
+    borderRadius: "50%",
+    fontSize: "1.1rem",
+    minHeight: "40px",
+  },
 };
 
 const NeonButton = ({
@@ -96,7 +119,11 @@ const NeonButton = ({
   };
 
   if (href) {
-    return <a href={href} {...props}>{children}</a>;
+    return (
+      <a href={href} {...props}>
+        {children}
+      </a>
+    );
   }
 
   return <button {...props}>{children}</button>;
