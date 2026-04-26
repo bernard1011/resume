@@ -44,7 +44,7 @@ const HeaderSection = () => {
               <img
                 src={Photo}
                 alt="Danya — Frontend Developer"
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover object-top"
                 style={{ borderRadius: "9999px" }}
               />
             </div>
