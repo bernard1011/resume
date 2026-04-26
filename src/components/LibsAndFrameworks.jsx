@@ -34,7 +34,7 @@ const LibsAndFrameworks = () => {
       <div
         style={{
           ...neonCardStyle,
-          borderRadius: "16px",
+          borderRadius: "30px",
           padding: "20px 24px",
           display: "flex",
           flexDirection: "column",

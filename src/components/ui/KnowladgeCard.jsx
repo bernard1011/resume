@@ -8,7 +8,7 @@ const KnowladgeCard = (prop) => {
       <div
         style={{
           ...neonCardStyle,
-          borderRadius: "20px",
+          borderRadius: "30px",
           padding: "28px 24px",
           display: "flex",
           flexDirection: "column",

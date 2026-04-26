@@ -2,6 +2,7 @@ const VARIANTS = {
   primary: {
     background: "linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%)",
     border: "1px solid rgba(255,255,255,0.12)",
+    borderRadius: "100px",
     color: "#fff",
     boxShadow: "0 0 18px rgba(0,0,0,0.5), 0 0 6px rgba(255,255,255,0.15) inset",
     hoverShadow:
@@ -11,6 +12,7 @@ const VARIANTS = {
   secondary: {
     background: "rgba(0,0,0,0.2)",
     border: "1px solid rgba(255,255,255,0.15)",
+    borderRadius: "100px",
     color: "rgba(255,255,255,0.85)",
     boxShadow: "0 0 10px rgba(0,0,0,0.3)",
     hoverShadow:
@@ -20,6 +22,7 @@ const VARIANTS = {
   ghost: {
     background: "transparent",
     border: "1px solid rgba(255,255,255,0.1)",
+    borderRadius: "100px",
     color: "rgba(255,255,255,0.7)",
     boxShadow: "none",
     hoverShadow: "0 0 16px rgba(0,0,0,0.4)",
@@ -28,6 +31,7 @@ const VARIANTS = {
   icon: {
     background: "rgba(255,255,255,0.05)",
     border: "1px solid rgba(255,255,255,0.1)",
+    borderRadius: "100px",
     color: "#e2e8f0",
     boxShadow: "0 0 8px rgba(0,0,0,0.3)",
     hoverShadow: "0 0 20px rgba(0,0,0,0.5)",
@@ -39,26 +43,26 @@ const SIZES = {
   sm: {
     padding: "6px 14px",
     fontSize: "0.8rem",
-    borderRadius: "10px",
+    borderRadius: "100px",
     minHeight: "32px",
   },
   md: {
     padding: "9px 20px",
     fontSize: "0.9rem",
-    borderRadius: "12px",
+    borderRadius: "100px",
     minHeight: "40px",
   },
   lg: {
     padding: "12px 28px",
     fontSize: "1rem",
-    borderRadius: "14px",
+    borderRadius: "100px",
     minHeight: "48px",
   },
   icon: {
     padding: "0",
     width: "40px",
     height: "40px",
-    borderRadius: "50%",
+    borderRadius: "100px",
     fontSize: "1.1rem",
     minHeight: "40px",
   },

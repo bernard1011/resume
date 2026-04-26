@@ -161,7 +161,7 @@ const Menu = () => {
           style={{
             width: 56,
             height: 56,
-            borderRadius: "18px",
+            borderRadius: "100px",
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
@@ -172,9 +172,9 @@ const Menu = () => {
             cursor: "pointer",
           }}
         >
-          <span style={{ width: 22, height: 1.5, background: "#fff", transition: "0.3s", transform: isOpen ? "rotate(45deg) translate(5px, 5px)" : "none" }} />
-          <span style={{ width: 22, height: 1.5, background: "#fff", transition: "0.3s", opacity: isOpen ? 0 : 1 }} />
-          <span style={{ width: 22, height: 1.5, background: "#fff", transition: "0.3s", transform: isOpen ? "rotate(-45deg) translate(6px, -6px)" : "none" }} />
+          <span style={{ width: 23, height: 1.5, background: "#fff", transition: "0.3s", transform: isOpen ? "rotate(45deg) translate(5px, 5px)" : "none" }} />
+          <span style={{ width: 23, height: 1.5, background: "#fff", transition: "0.3s", opacity: isOpen ? 0 : 1 }} />
+          <span style={{ width: 23, height: 1.5, background: "#fff", transition: "0.3s", transform: isOpen ? "rotate(-45deg) translate(5px, -6px)" : "none" }} />
         </button>
       </div>
 

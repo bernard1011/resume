@@ -9,7 +9,7 @@ const AiUsage = () => {
       <div
         style={{
           ...neonCardStyle,
-          borderRadius: "20px",
+          borderRadius: "30px",
           padding: "28px",
           display: "flex",
           flexDirection: "column",
