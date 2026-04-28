@@ -125,33 +125,72 @@ const Technologies = () => {
       </div>
 
       {/* Expanded description */}
-      <div style={{
-        overflow: "hidden",
-        maxHeight: selected ? "300px" : "0px",
-        opacity: selected ? 1 : 0,
-        transition: "max-height 0.35s ease, opacity 0.25s ease",
-      }}>
-        {selected && (
-          <div style={{
-            ...neonCardStyle,
-            borderRadius: "16px",
-            padding: "20px",
-            display: "flex",
-            gap: "16px",
-            alignItems: "flex-start",
-          }}>
-            <img src={selected.img} alt={selected.name} style={{ width: 36, height: 36, flexShrink: 0, marginTop: 2 }} />
-            <div>
-              <div style={{ color: "rgba(255,255,255,0.9)", fontWeight: 700, fontSize: "1rem", marginBottom: "8px" }}>
-                {selected.name}
-              </div>
-              <p style={{ color: "rgba(209,213,219,0.78)", fontSize: "0.95rem", lineHeight: 1.7, margin: 0 }}>
-                {selected.description}
-              </p>
-            </div>
+     <div className="relative">
+  {selected && (
+    <div
+      style={{
+        marginTop: "8px",
+        animation: "fadeSlide 0.3s ease",
+      }}
+    >
+      <div
+        style={{
+          ...neonCardStyle,
+          borderRadius: "16px",
+          padding: "20px",
+          display: "flex",
+          gap: "16px",
+          alignItems: "flex-start",
+        }}
+      >
+        <img
+          src={selected.img}
+          alt={selected.name}
+          style={{ width: 36, height: 36, flexShrink: 0, marginTop: 2 }}
+        />
+
+        <div>
+          <div
+            style={{
+              color: "rgba(255,255,255,0.9)",
+              fontWeight: 700,
+              fontSize: "1rem",
+              marginBottom: "8px",
+            }}
+          >
+            {selected.name}
           </div>
-        )}
+
+          <p
+            style={{
+              color: "rgba(209,213,219,0.78)",
+              fontSize: "0.95rem",
+              lineHeight: 1.7,
+              margin: 0,
+            }}
+          >
+            {selected.description}
+          </p>
+        </div>
       </div>
+
+      <style>
+        {`
+          @keyframes fadeSlide {
+            from {
+              opacity: 0;
+              transform: translateY(-10px);
+            }
+            to {
+              opacity: 1;
+              transform: translateY(0);
+            }
+          }
+        `}
+      </style>
+    </div>
+  )}
+</div>
     </div>
   );
 };
