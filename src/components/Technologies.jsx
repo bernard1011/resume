@@ -108,70 +108,79 @@ const Technologies = () => {
       </div>
 
       <div style={{ minHeight: "140px" }}>
-        <AnimatePresence mode="wait">
-          {selected ? (
-            <motion.div
-              key={selected.id}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.2 }}
-              style={{
-                ...neonCardStyle,
-                borderRadius: "24px",
-                padding: "28px",
-                display: "flex",
-                gap: "24px",
-                alignItems: "flex-start",
-                background: "rgba(255,255,255,0.03)",
-                border: "1px solid rgba(255,255,255,0.1)",
-              }}
-            >
-              <div className="hidden sm:flex" style={{ 
-                background: "rgba(255,255,255,0.05)", 
-                padding: "12px", 
-                borderRadius: "16px",
-                flexShrink: 0 
-              }}>
-                <img src={selected.img} alt="" style={{ width: 40, height: 40 }} />
-              </div>
+  <AnimatePresence mode="wait">
+    {selected ? (
+      <motion.div
+        key={selected.id}
+        initial={{ opacity: 0, y: 5 }} 
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -5 }}
+        transition={{ 
+          duration: 0.2, 
+          ease: "circOut" 
+        }}
+        style={{
+          ...neonCardStyle,
+          borderRadius: "24px",
+          padding: "24px",
+          display: "flex",
+          gap: "20px",
+          alignItems: "flex-start",
+          background: "rgba(255,255,255,0.03)",
+          border: "1px solid rgba(255,255,255,0.1)",
+          willChange: "transform, opacity", 
+          backfaceVisibility: "hidden",
+        }}
+      >
+        <div className="hidden sm:flex" style={{ 
+          background: "rgba(255,255,255,0.05)", 
+          padding: "12px", 
+          borderRadius: "16px",
+          flexShrink: 0 
+        }}>
+          <img src={selected.img} alt="" style={{ width: 40, height: 40 }} />
+        </div>
 
-              <div>
-                <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "8px" }}>
-                  <h3 style={{ color: "#fff", fontWeight: 700, fontSize: "1.25rem", margin: 0 }}>
-                    {selected.name}
-                  </h3>
-                  <span style={{ 
-                    padding: "2px 8px", 
-                    borderRadius: "6px", 
-                    background: "rgba(255,255,255,0.1)", 
-                    color: "rgba(255,255,255,0.5)",
-                    fontSize: "0.7rem",
-                    fontWeight: 600,
-                    textTransform: "uppercase"
-                  }}>
-                    {selected.tag}
-                  </span>
-                </div>
-                <p style={{ color: "rgba(255,255,255,0.7)", fontSize: "1rem", lineHeight: 1.7, margin: 0 }}>
-                  {selected.description}
-                </p>
-              </div>
-            </motion.div>
-          ) : (
-            <div style={{ 
-              textAlign: "center", 
-              padding: "40px", 
-              color: "rgba(255,255,255,0.2)",
-              border: "1px dashed rgba(255,255,255,0.1)",
-              borderRadius: "24px",
-              fontSize: "0.95rem"
+        <div>
+          <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "8px" }}>
+            <h3 style={{ color: "#fff", fontWeight: 700, fontSize: "1.25rem", margin: 0 }}>
+              {selected.name}
+            </h3>
+            <span style={{ 
+              padding: "2px 8px", 
+              borderRadius: "6px", 
+              background: "rgba(255,255,255,0.1)", 
+              color: "rgba(255,255,255,0.5)",
+              fontSize: "0.7rem",
+              fontWeight: 600,
+              textTransform: "uppercase"
             }}>
-              Click on a technology to learn more
-            </div>
-          )}
-        </AnimatePresence>
-      </div>
+              {selected.tag}
+            </span>
+          </div>
+          <p style={{ color: "rgba(255,255,255,0.7)", fontSize: "1rem", lineHeight: 1.7, margin: 0 }}>
+            {selected.description}
+          </p>
+        </div>
+      </motion.div>
+    ) : (
+      <motion.div 
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        style={{ 
+          textAlign: "center", 
+          padding: "40px", 
+          color: "rgba(255,255,255,0.2)",
+          border: "1px dashed rgba(255,255,255,0.1)",
+          borderRadius: "24px",
+          fontSize: "0.95rem"
+        }}
+      >
+        Click on a technology to learn more
+      </motion.div>
+    )}
+  </AnimatePresence>
+</div>
     </div>
   );
 };
