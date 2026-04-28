@@ -1,4 +1,6 @@
 import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+
 import Home from "../../assets/home.svg";
 import Proj from "../../assets/projects.svg";
 import Concat from "../../assets/concat.svg";
@@ -17,34 +19,79 @@ const scrollTo = (href) => {
   el.scrollIntoView({ behavior: "smooth", block: "start" });
 };
 
-// 🔥 Оптимізоване “скло”
 const glass = {
-  background: "rgba(13, 13, 15, 0.82)",
-  backdropFilter: "blur(12px) saturate(140%)",
-  WebkitBackdropFilter: "blur(12px) saturate(140%)",
-  border: "1px solid rgba(255, 255, 255, 0.06)",
-  boxShadow: `
-    0 10px 40px -10px rgba(0, 0, 0, 0.7), 
-    0 20px 50px -15px rgba(0, 0, 0, 0.5),
-    0 0 0 0.5px rgba(255, 255, 255, 0.05) inset
-  `,
+  background: "rgba(18, 18, 22, 0.72)",
+  backdropFilter: "blur(22px) saturate(180%)",
+  WebkitBackdropFilter: "blur(22px) saturate(180%)",
+  border: "1px solid rgba(255,255,255,0.08)",
+  boxShadow:
+    "0 30px 80px rgba(0,0,0,0.65), 0 10px 30px rgba(0,0,0,0.4)",
+};
+
+const menuVariants = {
+  hidden: {
+    opacity: 0,
+    scale: 0.92,
+    y: -18,
+    filter: "blur(10px)",
+  },
+  show: {
+    opacity: 1,
+    scale: 1,
+    y: 0,
+    filter: "blur(0px)",
+    transition: {
+      type: "spring",
+      stiffness: 380,
+      damping: 26,
+      mass: 0.9,
+      staggerChildren: 0.06,
+      delayChildren: 0.05,
+    },
+  },
+  exit: {
+    opacity: 0,
+    scale: 0.96,
+    y: -10,
+    filter: "blur(8px)",
+    transition: {
+      duration: 0.18,
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: -10, scale: 0.98 },
+  show: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: {
+      type: "spring",
+      stiffness: 500,
+      damping: 30,
+    },
+  },
+};
+
+const overlayVariants = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: { duration: 0.2 },
+  },
+  exit: {
+    opacity: 0,
+    transition: { duration: 0.18 },
+  },
 };
 
 const Menu = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-  const [atBottom, setAtBottom] = useState(false);
   const [active, setActive] = useState("home");
 
   useEffect(() => {
     const handleScroll = () => {
-      const scrollY = window.scrollY;
-      setScrolled(scrollY > 10);
-      setAtBottom(
-        scrollY + window.innerHeight >=
-          document.documentElement.scrollHeight - 20
-      );
-
       const sections = ["home", "about", "projects", "contact"];
       for (let i = sections.length - 1; i >= 0; i--) {
         const el = document.getElementById(sections[i]);
@@ -67,174 +114,136 @@ const Menu = () => {
 
   return (
     <>
-      {/* Нижня тінь */}
-      <div
-        className="fixed bottom-0 left-0 right-0 h-48 z-30 pointer-events-none transition-opacity duration-700"
-        style={{
-          background:
-            "linear-gradient(to top, #000000 0%, rgba(0,0,0,0.4) 40%, transparent 100%)",
-          opacity: atBottom ? 0 : 1,
-        }}
-      />
+      {/* OVERLAY */}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            variants={overlayVariants}
+            initial="hidden"
+            animate="show"
+            exit="exit"
+            className="fixed inset-0 z-40 md:hidden"
+            style={{
+              background: "rgba(0,0,0,0.35)",
+              backdropFilter: "blur(8px)",
+            }}
+            onClick={() => setIsOpen(false)}
+          />
+        )}
+      </AnimatePresence>
 
-      {/* Верхня тінь */}
-      <div
-        className="fixed top-0 left-0 right-0 h-48 z-30 pointer-events-none transition-opacity duration-700"
-        style={{
-          background:
-            "linear-gradient(to bottom, #000000 0%, rgba(0,0,0,0.4) 40%, transparent 100%)",
-          opacity: scrolled ? 1 : 0,
-        }}
-      />
-
-      {/* Overlay */}
-      {isOpen && (
-        <div
-          className="fixed inset-0 z-40 md:hidden bg-black/50"
-          onClick={() => setIsOpen(false)}
-        />
-      )}
-
-      {/* 📱 MOBILE MENU */}
+      {/* MOBILE */}
       <div className="fixed z-50 top-5 right-5 md:hidden">
-        {/* Dropdown */}
-        <div
-          style={{
-            position: "absolute",
-            top: "calc(100% + 14px)",
-            right: 0,
-            minWidth: "260px",
-            borderRadius: "24px",
-            overflow: "hidden",
-            ...glass,
+        {/* MENU */}
+        <AnimatePresence>
+          {isOpen && (
+            <motion.div
+              variants={menuVariants}
+              initial="hidden"
+              animate="show"
+              exit="exit"
+              style={{
+                position: "absolute",
+                top: "calc(100% + 14px)",
+                right: 0,
+                width: 270,
+                borderRadius: 28,
+                overflow: "hidden",
+                ...glass,
+              }}
+            >
+              {MENU_ITEMS.map((item) => {
+                const isActive = active === item.href.slice(1);
 
-            // 🔥 smooth animation
-            opacity: isOpen ? 1 : 0,
-            transform: isOpen
-              ? "translateY(0) scale(1)"
-              : "translateY(-8px) scale(0.98)",
+                return (
+                  <motion.button
+                    key={item.label}
+                    variants={itemVariants}
+                    onClick={() => handleNav(item.href)}
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 12,
+                      padding: "16px 20px",
+                      width: "100%",
+                      border: "none",
+                      cursor: "pointer",
+                      background: isActive
+                        ? "rgba(255,255,255,0.06)"
+                        : "transparent",
+                      color: isActive ? "#fff" : "#a1a1aa",
+                    }}
+                    whileTap={{ scale: 0.98 }}
+                    whileHover={{ x: 4 }}
+                  >
+                    <img
+                      src={item.icon}
+                      style={{ width: 18, height: 18 }}
+                    />
+                    {item.label}
+                  </motion.button>
+                );
+              })}
+            </motion.div>
+          )}
+        </AnimatePresence>
 
-            transition:
-              "transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.25s ease",
-
-            willChange: "transform, opacity",
-            pointerEvents: isOpen ? "auto" : "none",
-          }}
-        >
-          {MENU_ITEMS.map((item, index) => {
-            const isActive = active === item.href.slice(1);
-
-            return (
-              <button
-                key={item.label}
-                onClick={() => handleNav(item.href)}
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "14px",
-                  padding: "18px 24px",
-                  width: "100%",
-                  background: isActive
-                    ? "rgba(255,255,255,0.04)"
-                    : "transparent",
-                  border: "none",
-                  color: isActive ? "#ffffff" : "#94a3b8",
-                  fontSize: "1.05rem",
-                  fontWeight: isActive ? 600 : 400,
-                  cursor: "pointer",
-
-                  // 🔥 stagger animation
-                  opacity: isOpen ? 1 : 0,
-                  transform: isOpen
-                    ? "translateY(0)"
-                    : "translateY(-6px)",
-
-                  transition:
-                    "transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.25s ease",
-                  transitionDelay: isOpen
-                    ? `${index * 60}ms`
-                    : "0ms",
-                }}
-              >
-                <div
-                  style={{
-                    width: 6,
-                    height: 6,
-                    borderRadius: "50%",
-                    background: isActive ? "#fff" : "transparent",
-                    boxShadow: isActive ? "0 0 10px #fff" : "none",
-                    transition: "all 0.3s",
-                  }}
-                />
-                {item.label}
-              </button>
-            );
-          })}
-        </div>
-
-        {/* Burger button */}
-        <button
+        {/* BURGER */}
+        <motion.button
           onClick={() => setIsOpen((v) => !v)}
+          whileTap={{ scale: 0.92 }}
           style={{
             width: 56,
             height: 56,
-            borderRadius: "100px",
+            borderRadius: 999,
+            ...glass,
+            background: "rgba(20,20,22,0.9)",
             display: "flex",
             flexDirection: "column",
-            alignItems: "center",
             justifyContent: "center",
-            gap: "6px",
-            ...glass,
-            background: "rgba(20, 20, 22, 0.9)",
-            cursor: "pointer",
+            gap: 6,
+            alignItems: "center",
           }}
         >
-          <span
+          <motion.span
+            animate={isOpen ? { rotate: 45, y: 7 } : { rotate: 0, y: 0 }}
             style={{
-              width: 23,
-              height: 1.5,
+              width: 22,
+              height: 1.8,
               background: "#fff",
-              transition: "0.3s",
-              transform: isOpen
-                ? "rotate(45deg) translate(5px, 5px)"
-                : "none",
+              borderRadius: 10,
             }}
           />
-          <span
+          <motion.span
+            animate={isOpen ? { opacity: 0 } : { opacity: 1 }}
             style={{
               width: 23,
-              height: 1.5,
+              height: 1.8,
               background: "#fff",
-              transition: "0.3s",
-              opacity: isOpen ? 0 : 1,
+              borderRadius: 10,
             }}
           />
-          <span
+          <motion.span
+            animate={isOpen ? { rotate: -45, y: -8 } : { rotate: 0, y: 0 }}
             style={{
               width: 23,
-              height: 1.5,
+              height: 1.8,
               background: "#fff",
-              transition: "0.3s",
-              transform: isOpen
-                ? "rotate(-45deg) translate(5px, -6px)"
-                : "none",
+              borderRadius: 10,
             }}
           />
-        </button>
+        </motion.button>
       </div>
 
-      {/* 💻 DESKTOP MENU */}
-      <div className="fixed top-0 left-0 right-0 z-50 pointer-events-none hidden md:block">
+      <div className="fixed top-0 left-0 right-0 z-50 hidden md:block">
         <div className="max-w-screen-lg mx-auto px-8 py-8 flex justify-end">
           <nav
-            className="pointer-events-auto"
             style={{
               ...glass,
-              borderRadius: "100px",
-              padding: "6px",
+              borderRadius: 999,
+              padding: 6,
               display: "flex",
-              alignItems: "center",
-              gap: "4px",
+              gap: 4,
             }}
           >
             {MENU_ITEMS.map((item) => {
@@ -245,35 +254,16 @@ const Menu = () => {
                   key={item.label}
                   onClick={() => handleNav(item.href)}
                   style={{
-                    display: "inline-flex",
-                    alignItems: "center",
-                    gap: "8px",
-                    padding: "10px 22px",
-                    borderRadius: "100px",
+                    padding: "10px 20px",
+                    borderRadius: 999,
                     background: isActive
                       ? "rgba(255,255,255,0.08)"
                       : "transparent",
-                    border: "1px solid",
-                    borderColor: isActive
-                      ? "rgba(255,255,255,0.1)"
-                      : "transparent",
-                    color: isActive ? "#ffffff" : "#a1a1aa",
-                    fontSize: "0.95rem",
-                    fontWeight: isActive ? 600 : 500,
+                    color: isActive ? "#fff" : "#a1a1aa",
+                    border: "none",
                     cursor: "pointer",
-                    transition:
-                      "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
                   }}
                 >
-                  <img
-                    src={item.icon}
-                    alt=""
-                    style={{
-                      width: 16,
-                      height: 16,
-                      opacity: isActive ? 1 : 0.5,
-                    }}
-                  />
                   {item.label}
                 </button>
               );
