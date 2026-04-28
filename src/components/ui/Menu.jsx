@@ -114,7 +114,6 @@ const Menu = () => {
 
   return (
     <>
-      {/* OVERLAY */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -132,9 +131,7 @@ const Menu = () => {
         )}
       </AnimatePresence>
 
-      {/* MOBILE */}
       <div className="fixed z-50 top-5 right-5 md:hidden">
-        {/* MENU */}
         <AnimatePresence>
           {isOpen && (
             <motion.div
@@ -148,7 +145,10 @@ const Menu = () => {
                 right: 0,
                 width: 270,
                 borderRadius: 28,
-                overflow: "hidden",
+                padding: "8px",
+                display: "flex",
+                flexDirection: "column",
+                gap: "4px",
                 ...glass,
               }}
             >
@@ -164,12 +164,13 @@ const Menu = () => {
                       display: "flex",
                       alignItems: "center",
                       gap: 12,
-                      padding: "16px 20px",
+                      padding: "12px 16px",
                       width: "100%",
                       border: "none",
+                      borderRadius: 20,
                       cursor: "pointer",
                       background: isActive
-                        ? "rgba(255,255,255,0.06)"
+                        ? "rgba(255,255,255,0.08)"
                         : "transparent",
                       color: isActive ? "#fff" : "#a1a1aa",
                     }}
@@ -188,7 +189,6 @@ const Menu = () => {
           )}
         </AnimatePresence>
 
-        {/* BURGER */}
         <motion.button
           onClick={() => setIsOpen((v) => !v)}
           whileTap={{ scale: 0.92 }}
@@ -241,9 +241,9 @@ const Menu = () => {
             style={{
               ...glass,
               borderRadius: 999,
-              padding: 6,
+              padding: "6px",
               display: "flex",
-              gap: 4,
+              gap: "4px",
             }}
           >
             {MENU_ITEMS.map((item) => {
@@ -262,6 +262,7 @@ const Menu = () => {
                     color: isActive ? "#fff" : "#a1a1aa",
                     border: "none",
                     cursor: "pointer",
+                    transition: "all 0.2s ease",
                   }}
                 >
                   {item.label}
