@@ -70,7 +70,7 @@ const Contact = () => {
       <h2 className="text-gray-50 font-bold text-3xl">Contact Me:</h2>
       <p
         style={{
-          color: "rgba(209,213,219,0.8)",
+          color: "rgba(209,213,219,0.75)",
           fontSize: "1.05rem",
           lineHeight: 1.6,
         }}

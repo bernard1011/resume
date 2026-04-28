@@ -1,11 +1,10 @@
-import KnowladgeCard from "./ui/KnowladgeCard";
+import { useState } from "react";
+import { neonCardStyle } from "../utils/neonCard";
 import Html from "../assets/html-icon.svg";
 import Css from "../assets/css-icon.svg";
 import JS from "../assets/js-icon.svg";
-import NeonButton from "./ui/NeonButton";
 import ReactI from "../assets/react.svg";
 import Tail from "../assets/tailwind-icon.svg";
-import { useState, useRef } from "react";
 
 const cardInfo = [
   {
@@ -13,6 +12,7 @@ const cardInfo = [
     img: Html,
     img2: Css,
     name: "HTML & CSS",
+    tag: "Markup & Styling",
     description:
       "I have an understanding of semantic HTML. Proficient in using pure CSS for element positioning and building mobile-first, responsive layouts. Able to create simple animations to enhance user experience. Committed to continuous learning and regularly exploring new best practices in CSS and modern markup techniques.",
   },
@@ -20,6 +20,7 @@ const cardInfo = [
     id: 2,
     img: JS,
     name: "JavaScript",
+    tag: "Core Language",
     description:
       "Use JavaScript to build interactive web applications, with a solid understanding of core concepts including functions, arrays, objects, closures, and asynchronous programming. Emphasize writing clean, maintainable code and enjoy solving complex problems. Recently focused on using JavaScript with React, while remaining confident in working with vanilla JavaScript when required.",
   },
@@ -27,140 +28,129 @@ const cardInfo = [
     id: 3,
     img: ReactI,
     name: "React",
+    tag: "UI Framework",
     description:
       "Build modern user interfaces using React, with an understanding of component-based architecture, props, state, and React Hooks such as useState and useEffect. Focus on creating reusable components and well-structured project architecture. Consistently apply and strengthen skills through hands-on development in personal projects.",
   },
   {
     id: 4,
     img: Tail,
-    name: "TailwindCSS",
+    name: "Tailwind",
+    tag: "CSS Framework",
     description:
       "Use Tailwind CSS to build modern and responsive user interfaces quickly. Understand how to compose utility classes to create layouts, spacing, typography, and responsive designs while keeping the code clean and consistent.",
   },
 ];
 
-const ANIMATION_DURATION = 300;
-
 const Technologies = () => {
-  const [currentCard, setCurrentCard] = useState(0);
-  const [prevCardIndex, setPrevCardIndex] = useState(null);
-  const [direction, setDirection] = useState("right");
-  const [touchStart, setTouchStart] = useState(null);
-  const [touchEnd, setTouchEnd] = useState(null);
-  const timerRef = useRef(null);
-
-  const goTo = (next, dir) => {
-    if (next === currentCard) return;
-    if (timerRef.current) clearTimeout(timerRef.current);
-    setDirection(dir);
-    setPrevCardIndex(currentCard);
-    setCurrentCard(next);
-    timerRef.current = setTimeout(
-      () => setPrevCardIndex(null),
-      ANIMATION_DURATION,
-    );
-  };
-
-  const goPrev = () =>
-    goTo(currentCard === 0 ? cardInfo.length - 1 : currentCard - 1, "left");
-  const goNext = () =>
-    goTo(currentCard === cardInfo.length - 1 ? 0 : currentCard + 1, "right");
-
-  const onTouchStart = (e) => {
-    setTouchStart(e.targetTouches[0].clientX);
-    setTouchEnd(null);
-  };
-  const onTouchMove = (e) => {
-    setTouchEnd(e.targetTouches[0].clientX);
-  };
-  const onTouchEnd = () => {
-    if (!touchStart || !touchEnd) return;
-    const d = touchStart - touchEnd;
-    if (Math.abs(d) > 50) {
-      if (d > 0) goNext();
-      else goPrev();
-    }
-  };
+  const [active, setActive] = useState(null);
+  const selected = active !== null ? cardInfo.find((c) => c.id === active) : null;
 
   return (
-    <div className="flex flex-col gap-5">
-      <h2 className="text-gray-50 font-bold text-3xl">Web Knowledges:</h2>
+    <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
+      <h2 style={{ color: "rgba(255,255,255,0.9)", fontWeight: 700, fontSize: "1.75rem", letterSpacing: "-0.02em", margin: 0 }}>
+        Web Knowledges
+      </h2>
 
-      <div
-        style={{ display: "grid", padding: "4px" }}
-        onTouchStart={onTouchStart}
-        onTouchMove={onTouchMove}
-        onTouchEnd={onTouchEnd}
+      {/* grid: 2 cols on mobile, 4 on desktop */}
+      <div style={{
+        display: "grid",
+        gridTemplateColumns: "repeat(2, 1fr)",
+        gap: "10px",
+      }}
+        className="sm:grid-cols-4"
       >
-        {cardInfo.map((card, i) => {
-          const isActive = i === currentCard;
-          const isPrev = i === prevCardIndex;
-
+        {cardInfo.map((card) => {
+          const isActive = active === card.id;
           return (
-            <div
-              key={isActive ? `active-${card.id}` : card.id}
+            <button
+              key={card.id}
+              onClick={() => setActive(isActive ? null : card.id)}
               style={{
-                gridArea: "1 / 1",
-                zIndex: isActive ? 1 : 0,
-                visibility: isActive || isPrev ? "visible" : "hidden",
-
-                opacity: isActive || isPrev ? 1 : 0,
+                ...neonCardStyle,
+                borderRadius: "16px",
+                padding: "16px 12px",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                gap: "10px",
+                cursor: "pointer",
+                border: isActive
+                  ? "1px solid rgba(255,255,255,0.22)"
+                  : "1px solid rgba(255,255,255,0.07)",
+                background: isActive
+                  ? "rgba(255,255,255,0.09)"
+                  : "rgba(255,255,255,0.04)",
+                transition: "all 0.2s ease",
+                outline: "none",
+                textAlign: "center",
+                width: "100%",
+                boxSizing: "border-box",
               }}
-              className={
-                isActive
-                  ? direction === "right"
-                    ? "slide-in-right"
-                    : "slide-in-left"
-                  : isPrev
-                    ? direction === "right"
-                      ? "slide-out-left"
-                      : "slide-out-right"
-                    : ""
-              }
+              onMouseEnter={(e) => {
+                if (!isActive) {
+                  e.currentTarget.style.background = "rgba(255,255,255,0.07)";
+                  e.currentTarget.style.borderColor = "rgba(255,255,255,0.15)";
+                  e.currentTarget.style.transform = "translateY(-2px)";
+                }
+              }}
+              onMouseLeave={(e) => {
+                if (!isActive) {
+                  e.currentTarget.style.background = "rgba(255,255,255,0.04)";
+                  e.currentTarget.style.borderColor = "rgba(255,255,255,0.07)";
+                  e.currentTarget.style.transform = "translateY(0)";
+                }
+              }}
             >
-              <KnowladgeCard
-                img={card.img}
-                img2={card.img2}
-                name={card.name}
-                description={card.description}
-              />
-            </div>
+              <div style={{ position: "relative", width: 44, height: 44, flexShrink: 0 }}>
+                <img src={card.img} alt={card.name} style={{ width: 44, height: 44, objectFit: "contain" }} />
+                {card.img2 && (
+                  <img src={card.img2} alt="" style={{
+                    width: 24, height: 24, objectFit: "contain",
+                    position: "absolute", bottom: -4, right: -10, opacity: 0.7,
+                  }} />
+                )}
+              </div>
+              <div>
+                <div style={{ color: "rgba(255,255,255,0.88)", fontSize: "0.85rem", fontWeight: 600, marginBottom: "3px", lineHeight: 1.3 }}>
+                  {card.name}
+                </div>
+                <div style={{ color: "rgba(255,255,255,0.35)", fontSize: "0.7rem", letterSpacing: "0.03em", lineHeight: 1.3 }}>
+                  {card.tag}
+                </div>
+              </div>
+            </button>
           );
         })}
       </div>
 
-      <div className="flex items-center justify-between mt-4">
-        <NeonButton variant="icon" onClick={goPrev} aria-label="Previous">
-          ‹
-        </NeonButton>
-
-        <div className="flex justify-center gap-2">
-          {cardInfo.map((_, i) => (
-            <button
-              key={i}
-              onClick={() => goTo(i, i > currentCard ? "right" : "left")}
-              style={{
-                width: i === currentCard ? "24px" : "10px",
-                height: "10px",
-                borderRadius: "5px",
-                transition: "all 0.3s ease",
-                background:
-                  i === currentCard
-                    ? "linear-gradient(90deg,#1a1a1a,#3a3a3a)"
-                    : "rgba(255,255,255,0.1)",
-                boxShadow:
-                  i === currentCard ? "0 0 10px rgba(0,0,0,0.5)" : "none",
-                border: "none",
-                cursor: "pointer",
-                padding: 0,
-              }}
-            />
-          ))}
-        </div>
-
-        <NeonButton variant="icon" onClick={goNext} aria-label="Next">
-          ›
-        </NeonButton>
+      {/* Expanded description */}
+      <div style={{
+        overflow: "hidden",
+        maxHeight: selected ? "300px" : "0px",
+        opacity: selected ? 1 : 0,
+        transition: "max-height 0.35s ease, opacity 0.25s ease",
+      }}>
+        {selected && (
+          <div style={{
+            ...neonCardStyle,
+            borderRadius: "16px",
+            padding: "20px",
+            display: "flex",
+            gap: "16px",
+            alignItems: "flex-start",
+          }}>
+            <img src={selected.img} alt={selected.name} style={{ width: 36, height: 36, flexShrink: 0, marginTop: 2 }} />
+            <div>
+              <div style={{ color: "rgba(255,255,255,0.9)", fontWeight: 700, fontSize: "1rem", marginBottom: "8px" }}>
+                {selected.name}
+              </div>
+              <p style={{ color: "rgba(209,213,219,0.78)", fontSize: "0.95rem", lineHeight: 1.7, margin: 0 }}>
+                {selected.description}
+              </p>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

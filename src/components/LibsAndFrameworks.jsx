@@ -1,5 +1,5 @@
 import LinuxI from "../assets/linux.svg";
-import { neonCardStyle, neonHoverHandlers } from "../utils/neonCard";
+import { neonCardStyle } from "../utils/neonCard";
 
 const skills = [
   "Linux terminal: navigation and command-line tools",
@@ -13,67 +13,77 @@ const skills = [
 
 const LibsAndFrameworks = () => {
   return (
-    <div className="flex flex-col gap-5">
-      <h2 className="text-gray-50 font-bold text-3xl">Linux:</h2>
-      <div className="flex items-center gap-7">
-        <img src={LinuxI} alt="linux" className="w-24" />
-        <h3 className="text-gray-50 text-2xl font-bold">
-          Networking and Administration
-        </h3>
-      </div>
-      <p className="text-gray-50 text-lg">
-        Confident in working in Linux environments using the terminal and
-        command-line tools. Have basic experience with Bash scripting, including
-        automating simple tasks. Familiar with file permissions, user access
-        management, and secure remote connections via SSH. Regularly work with
-        virtual machines for development and testing purposes. Currently
-        completing the "Linux Networking and Administration" course at PortaOne,
-        continuously strengthening practical skills and deepening knowledge.
-      </p>
+    <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
+      <h2 style={{ color: "rgba(255,255,255,0.9)", fontWeight: 700, fontSize: "1.75rem", letterSpacing: "-0.02em", margin: 0 }}>
+        Linux
+      </h2>
 
-      <div
-        style={{
-          ...neonCardStyle,
-          borderRadius: "30px",
-          padding: "20px 24px",
+      {/* Outer card */}
+      <div style={{
+        ...neonCardStyle,
+        borderRadius: "20px",
+        padding: "24px",
+        display: "flex",
+        flexDirection: "column",
+        gap: "20px",
+      }}>
+        {/* Header — always full width */}
+        <div style={{
           display: "flex",
-          flexDirection: "column",
-          gap: "10px",
-        }}
-        {...neonHoverHandlers}
-      >
-        {skills.map((skill, i) => (
-          <div
-            key={i}
-            style={{ display: "flex", alignItems: "center", gap: "12px" }}
-          >
-            <svg
-              width="8"
-              height="8"
-              viewBox="0 0 8 8"
-              style={{ flexShrink: 0 }}
-            >
-              <rect
-                x="4"
-                y="0"
-                width="5.66"
-                height="5.66"
-                rx="1"
-                transform="rotate(45 4 0)"
-                fill="rgba(255,255,255,0.5)"
-              />
-            </svg>
-            <span
-              style={{
-                color: "rgba(209,213,219,0.85)",
-                fontSize: "1rem",
-                lineHeight: 1.5,
-              }}
-            >
-              {skill}
-            </span>
+          alignItems: "center",
+          gap: "14px",
+          background: "rgba(255,255,255,0.04)",
+          border: "1px solid rgba(255,255,255,0.08)",
+          borderRadius: "14px",
+          padding: "14px 16px",
+        }}>
+          <img src={LinuxI} alt="linux" style={{ width: 48, height: 48, flexShrink: 0 }} />
+          <div>
+            <div style={{ color: "#f1f5f9", fontSize: "1rem", fontWeight: 700, marginBottom: "3px" }}>
+              Networking & Administration
+            </div>
+            <div style={{ fontSize: "0.75rem", color: "rgba(255,255,255,0.4)", letterSpacing: "0.05em" }}>
+              PortaOne course · in progress
+            </div>
           </div>
-        ))}
+        </div>
+
+        {/* Body: stacked on mobile, side-by-side on md+ */}
+        <div className="flex flex-col md:grid md:grid-cols-2 md:gap-6" style={{ gap: "16px" }}>
+          {/* Description */}
+          <p style={{ color: "rgba(209,213,219,0.72)", fontSize: "0.95rem", lineHeight: 1.72, margin: 0 }}>
+            Confident in working in Linux environments using the terminal and
+            command-line tools. Have basic experience with Bash scripting,
+            including automating simple tasks. Familiar with file permissions,
+            user access management, and secure remote connections via SSH.
+            Regularly work with virtual machines for development and testing
+            purposes.
+          </p>
+
+          {/* Skills list */}
+          <div style={{
+            background: "rgba(255,255,255,0.03)",
+            border: "1px solid rgba(255,255,255,0.07)",
+            borderRadius: "14px",
+            padding: "16px 18px",
+            display: "flex",
+            flexDirection: "column",
+            gap: "9px",
+          }}>
+            {skills.map((skill, i) => (
+              <div key={i} style={{ display: "flex", alignItems: "flex-start", gap: "10px" }}>
+                <div style={{
+                  width: 5, height: 5, borderRadius: "50%", flexShrink: 0, marginTop: "7px",
+                  background: "rgba(168,139,250,0.65)",
+                  boxShadow: "0 0 5px rgba(168,139,250,0.35)",
+                }} />
+                <span style={{ color: "rgba(209,213,219,0.8)", fontSize: "0.9rem", lineHeight: 1.55 }}>
+                  {skill}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   );

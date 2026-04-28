@@ -24,20 +24,16 @@ const myproj = [
 
 const MyProj = () => {
   return (
-    <section className="flex flex-col">
-      <div className="flex items-center gap-5 mb-5">
-        <img src={ProjSec} alt="my projects" className="w-full max-w-28" />
-        <h2 className="text-gray-50 text-3xl font-bold">My Projects:</h2>
+    <section className="flex flex-col gap-5">
+      <div style={{ display: "flex", alignItems: "center", gap: "14px" }}>
+        <img src={ProjSec} alt="my projects" style={{ width: 48, height: 48 }} />
+        <h2 style={{ color: "rgba(255,255,255,0.9)", fontWeight: 700, fontSize: "1.75rem", letterSpacing: "-0.02em", margin: 0 }}>
+          My Projects
+        </h2>
       </div>
       <div className="md:grid md:grid-cols-2 md:gap-5 md:items-stretch flex flex-col gap-5">
         {myproj.map((item) => (
-          <KnowladgeCard
-            key={item.id}
-            img={item.img}
-            name={item.name}
-            description={item.description}
-            url={item.url}
-          />
+          <KnowladgeCard key={item.id} img={item.img} name={item.name} description={item.description} url={item.url} />
         ))}
       </div>
     </section>

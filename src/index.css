@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 body {
-  background: linear-gradient(180deg, #e8e8ea 0%, #c9c9cd 50%, #a8a8ac 100%);
+  background: #0e0e10;
   padding: 0 10px;
   min-height: 100vh;
 }
@@ -13,94 +13,29 @@ body {
 }
 
 @keyframes bounceFade {
-  0%,
-  100% {
-    opacity: 0.2;
-    transform: translateY(-4px);
+  0%, 100% { opacity: 0.2; transform: translateY(-4px); }
+  50%       { opacity: 1;   transform: translateY(4px);  }
+}
+
+.arrows-animate > * { animation: bounceFade 1.5s ease-in-out infinite; }
+.arrows-animate > *:nth-child(2) { animation-delay: 200ms; }
+.arrows-animate path:nth-child(1) { animation: bounceFade 1.5s ease-in-out infinite; }
+.arrows-animate path:nth-child(2) { animation: bounceFade 1.5s ease-in-out infinite; animation-delay: 200ms; }
+
+@keyframes slideInRight  { from { transform: translateX(100%);  opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+@keyframes slideInLeft   { from { transform: translateX(-100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+@keyframes slideOutLeft  { from { transform: translateX(0); opacity: 1; } to { transform: translateX(-100%); opacity: 0; } }
+@keyframes slideOutRight { from { transform: translateX(0); opacity: 1; } to { transform: translateX(100%);  opacity: 0; } }
+
+.slide-in-right  { animation: slideInRight  0.3s ease-out; }
+.slide-in-left   { animation: slideInLeft   0.3s ease-out; }
+.slide-out-left  { animation: slideOutLeft  0.3s ease-out forwards; }
+.slide-out-right { animation: slideOutRight 0.3s ease-out forwards; }
+
+html { scroll-behavior: smooth; }
+
+@media (min-width: 640px) {
+  .sm\:grid-cols-4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
-  50% {
-    opacity: 1;
-    transform: translateY(4px);
-  }
-}
-
-.arrows-animate > * {
-  animation: bounceFade 1.5s ease-in-out infinite;
-}
-
-.arrows-animate > *:nth-child(2) {
-  animation-delay: 200ms;
-}
-
-.arrows-animate path:nth-child(1) {
-  animation: bounceFade 1.5s ease-in-out infinite;
-}
-
-.arrows-animate path:nth-child(2) {
-  animation: bounceFade 1.5s ease-in-out infinite;
-  animation-delay: 200ms;
-}
-
-@keyframes slideInRight {
-  from {
-    transform: translateX(100%);
-    opacity: 0;
-  }
-  to {
-    transform: translateX(0);
-    opacity: 1;
-  }
-}
-
-@keyframes slideInLeft {
-  from {
-    transform: translateX(-100%);
-    opacity: 0;
-  }
-  to {
-    transform: translateX(0);
-    opacity: 1;
-  }
-}
-
-.slide-in-right {
-  animation: slideInRight 0.3s ease-out;
-}
-
-.slide-in-left {
-  animation: slideInLeft 0.3s ease-out;
-}
-
-@keyframes slideOutLeft {
-  from {
-    transform: translateX(0);
-    opacity: 1;
-  }
-  to {
-    transform: translateX(-100%);
-    opacity: 0;
-  }
-}
-
-@keyframes slideOutRight {
-  from {
-    transform: translateX(0);
-    opacity: 1;
-  }
-  to {
-    transform: translateX(100%);
-    opacity: 0;
-  }
-}
-
-.slide-out-left {
-  animation: slideOutLeft 0.3s ease-out forwards;
-}
-
-.slide-out-right {
-  animation: slideOutRight 0.3s ease-out forwards;
-}
-
-html {
-  scroll-behavior: smooth;
 }
