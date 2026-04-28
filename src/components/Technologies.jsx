@@ -14,33 +14,29 @@ const cardInfo = [
     img2: Css,
     name: "HTML & CSS",
     tag: "Markup & Styling",
-    description:
-      "I have a deep understanding of semantic HTML and modern CSS. Proficient in element positioning, Flexbox, and Grid to build mobile-first, responsive layouts. I focus on writing clean, maintainable code and creating smooth user experiences through subtle animations.",
+    description: "I have a deep understanding of semantic HTML and modern CSS. Proficient in element positioning, Flexbox, and Grid to build mobile-first, responsive layouts."
   },
   {
     id: 2,
     img: JS,
     name: "JavaScript",
     tag: "Core Language",
-    description:
-      "I build dynamic web applications using JavaScript, with a solid grasp of core concepts like ES6+ syntax, asynchronous programming (Promises/async-await), and DOM manipulation. I enjoy solving logical problems and constantly improving code efficiency.",
+    description: "I build dynamic web applications using JavaScript, with a solid grasp of core concepts like ES6+ syntax, asynchronous programming, and DOM manipulation."
   },
   {
     id: 3,
     img: ReactI,
     name: "React",
     tag: "UI Framework",
-    description:
-      "I develop modern interfaces using React, focusing on component-based architecture and reusable logic. Experienced with functional components and Hooks (useState, useEffect, useMemo). I strive to build scalable applications with high performance.",
+    description: "I develop modern interfaces using React, focusing on component-based architecture and reusable logic. Experienced with functional components and Hooks."
   },
   {
     id: 4,
     img: Tail,
     name: "Tailwind",
     tag: "CSS Framework",
-    description:
-      "I use Tailwind CSS to accelerate the development process while maintaining a unique design system. Expert in utility-first workflows, responsive modifiers, and customizing themes to create pixel-perfect, consistent UI components.",
-  },
+    description: "I use Tailwind CSS to accelerate the development process. Expert in utility-first workflows and customizing themes for pixel-perfect components."
+  }
 ];
 
 const Technologies = () => {
@@ -65,8 +61,7 @@ const Technologies = () => {
             <motion.button
               key={card.id}
               onClick={() => setActive(isActive ? null : card.id)}
-              whileHover={{ y: -4 }}
-              whileTap={{ scale: 0.97 }}
+              whileTap={{ scale: 0.95 }}
               style={{
                 ...neonCardStyle,
                 borderRadius: "20px",
@@ -77,110 +72,74 @@ const Technologies = () => {
                 gap: "12px",
                 cursor: "pointer",
                 border: "1px solid",
-                borderColor: isActive ? "rgba(255,255,255,0.25)" : "rgba(255,255,255,0.08)",
-                background: isActive ? "rgba(255,255,255,0.1)" : "rgba(255,255,255,0.04)",
-                transition: "all 0.3s ease",
+                borderColor: isActive ? "rgba(255,255,255,0.3)" : "rgba(255,255,255,0.08)",
+                background: isActive ? "rgba(255,255,255,0.12)" : "rgba(255,255,255,0.04)",
                 outline: "none",
                 width: "100%",
+                touchAction: "manipulation"
               }}
             >
               <div style={{ position: "relative", width: 48, height: 48 }}>
-                <img src={card.img} alt={card.name} style={{ width: 48, height: 48, objectFit: "contain" }} />
+                <img src={card.img} alt={card.name} style={{ width: 48, height: 48 }} />
                 {card.img2 && (
                   <img src={card.img2} alt="" style={{
-                    width: 24, height: 24, objectFit: "contain",
-                    position: "absolute", bottom: -4, right: -10,
+                    width: 24, height: 24, position: "absolute", bottom: -4, right: -10,
                     background: "#121216", borderRadius: "4px", padding: "2px"
                   }} />
                 )}
               </div>
               <div style={{ textAlign: "center" }}>
-                <div style={{ color: "#fff", fontSize: "0.9rem", fontWeight: 600, marginBottom: "2px" }}>
-                  {card.name}
-                </div>
-                <div style={{ color: "rgba(255,255,255,0.3)", fontSize: "0.75rem", textTransform: "uppercase", letterSpacing: "0.05em" }}>
-                  {card.tag}
-                </div>
+                <div style={{ color: "#fff", fontSize: "0.9rem", fontWeight: 600 }}>{card.name}</div>
+                <div style={{ color: "rgba(255,255,255,0.3)", fontSize: "0.75rem", textTransform: "uppercase" }}>{card.tag}</div>
               </div>
             </motion.button>
           );
         })}
       </div>
 
-      <div style={{ minHeight: "140px" }}>
-  <AnimatePresence mode="wait">
-    {selected ? (
-      <motion.div
-        key={selected.id}
-        initial={{ opacity: 0, y: 5 }} 
-        animate={{ opacity: 1, y: 0 }}
-        exit={{ opacity: 0, y: -5 }}
-        transition={{ 
-          duration: 0.2, 
-          ease: "circOut" 
-        }}
-        style={{
-          ...neonCardStyle,
-          borderRadius: "24px",
-          padding: "24px",
-          display: "flex",
-          gap: "20px",
-          alignItems: "flex-start",
-          background: "rgba(255,255,255,0.03)",
-          border: "1px solid rgba(255,255,255,0.1)",
-          willChange: "transform, opacity", 
-          backfaceVisibility: "hidden",
-        }}
-      >
-        <div className="hidden sm:flex" style={{ 
-          background: "rgba(255,255,255,0.05)", 
-          padding: "12px", 
-          borderRadius: "16px",
-          flexShrink: 0 
-        }}>
-          <img src={selected.img} alt="" style={{ width: 40, height: 40 }} />
-        </div>
+      <div style={{ minHeight: "120px", position: "relative" }}>
+        <AnimatePresence mode="wait">
+          {selected ? (
+            <motion.div
+              key={selected.id}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.15 }}
+              style={{
+                borderRadius: "24px",
+                padding: "24px",
+                display: "flex",
+                gap: "20px",
+                background: "#1a1a1e", 
+                border: "1px solid rgba(255,255,255,0.1)",
+                willChange: "opacity",
+                transform: "translateZ(0)" 
+              }}
+            >
+              <div className="hidden sm:flex" style={{ flexShrink: 0 }}>
+                <img src={selected.img} alt="" style={{ width: 40, height: 40 }} />
+              </div>
 
-        <div>
-          <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "8px" }}>
-            <h3 style={{ color: "#fff", fontWeight: 700, fontSize: "1.25rem", margin: 0 }}>
-              {selected.name}
-            </h3>
-            <span style={{ 
-              padding: "2px 8px", 
-              borderRadius: "6px", 
-              background: "rgba(255,255,255,0.1)", 
-              color: "rgba(255,255,255,0.5)",
-              fontSize: "0.7rem",
-              fontWeight: 600,
-              textTransform: "uppercase"
+              <div>
+                <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "8px" }}>
+                  <h3 style={{ color: "#fff", fontWeight: 700, fontSize: "1.2rem", margin: 0 }}>{selected.name}</h3>
+                </div>
+                <p style={{ color: "rgba(255,255,255,0.7)", fontSize: "0.95rem", lineHeight: 1.6, margin: 0 }}>
+                  {selected.description}
+                </p>
+              </div>
+            </motion.div>
+          ) : (
+            <div style={{ 
+              textAlign: "center", padding: "30px", color: "rgba(255,255,255,0.15)",
+              border: "1px dashed rgba(255,255,255,0.08)", borderRadius: "24px"
             }}>
-              {selected.tag}
-            </span>
-          </div>
-          <p style={{ color: "rgba(255,255,255,0.7)", fontSize: "1rem", lineHeight: 1.7, margin: 0 }}>
-            {selected.description}
-          </p>
-        </div>
-      </motion.div>
-    ) : (
-      <motion.div 
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        style={{ 
-          textAlign: "center", 
-          padding: "40px", 
-          color: "rgba(255,255,255,0.2)",
-          border: "1px dashed rgba(255,255,255,0.1)",
-          borderRadius: "24px",
-          fontSize: "0.95rem"
-        }}
-      >
-        Click on a technology to learn more
-      </motion.div>
-    )}
-  </AnimatePresence>
-</div>
+              Select a technology to see details
+            </div>
+          )}
+        </AnimatePresence>
+      </div>
     </div>
   );
 };
