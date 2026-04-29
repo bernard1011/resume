@@ -8,17 +8,18 @@ const skills = [
   "Secure remote connections via SSH",
   "Virtual machines for development and testing",
   "Networking basics: IP configuration, ports, and services",
-  "Continuous hands-on practice to strengthen skills",
 ];
 
 const LibsAndFrameworks = () => {
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
-      <h2 style={{ color: "rgba(255,255,255,0.9)", fontWeight: 700, fontSize: "1.75rem", letterSpacing: "-0.02em", margin: 0 }}>
-        Linux
+      <h2 style={{
+        color: "rgba(255,255,255,0.9)", fontWeight: 700,
+        fontSize: "1.75rem", letterSpacing: "-0.02em", margin: 0,
+      }}>
+        Linux & Networking
       </h2>
 
-      {/* Outer card */}
       <div style={{
         ...neonCardStyle,
         borderRadius: "20px",
@@ -27,11 +28,9 @@ const LibsAndFrameworks = () => {
         flexDirection: "column",
         gap: "20px",
       }}>
-        {/* Header — always full width */}
+        {/* Header */}
         <div style={{
-          display: "flex",
-          alignItems: "center",
-          gap: "14px",
+          display: "flex", alignItems: "center", gap: "14px",
           background: "rgba(255,255,255,0.04)",
           border: "1px solid rgba(255,255,255,0.08)",
           borderRadius: "14px",
@@ -48,19 +47,25 @@ const LibsAndFrameworks = () => {
           </div>
         </div>
 
-        {/* Body: stacked on mobile, side-by-side on md+ */}
+        {/* Body */}
         <div className="flex flex-col md:grid md:grid-cols-2 md:gap-6" style={{ gap: "16px" }}>
           {/* Description */}
-          <p style={{ color: "rgba(209,213,219,0.72)", fontSize: "0.95rem", lineHeight: 1.72, margin: 0 }}>
-            Confident in working in Linux environments using the terminal and
-            command-line tools. Have basic experience with Bash scripting,
-            including automating simple tasks. Familiar with file permissions,
-            user access management, and secure remote connections via SSH.
-            Regularly work with virtual machines for development and testing
-            purposes.
-          </p>
+          <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+            <p style={{ color: "rgba(209,213,219,0.72)", fontSize: "0.95rem", lineHeight: 1.72, margin: 0 }}>
+              I'm comfortable working in Linux environments — I use the terminal daily
+              for navigation, file management, and running scripts. I've written basic
+              Bash scripts to automate repetitive tasks and worked with file permissions
+              and user access management.
+            </p>
+            <p style={{ color: "rgba(209,213,219,0.72)", fontSize: "0.95rem", lineHeight: 1.72, margin: 0 }}>
+              I regularly use virtual machines for development and testing, and have
+              experience setting up secure remote connections via SSH. Currently
+              deepening my networking knowledge through the PortaOne course — learning
+              how data is transmitted, what protocols do, and how networks are structured.
+            </p>
+          </div>
 
-          {/* Skills list */}
+          {/* Skills */}
           <div style={{
             background: "rgba(255,255,255,0.03)",
             border: "1px solid rgba(255,255,255,0.07)",
@@ -73,7 +78,8 @@ const LibsAndFrameworks = () => {
             {skills.map((skill, i) => (
               <div key={i} style={{ display: "flex", alignItems: "flex-start", gap: "10px" }}>
                 <div style={{
-                  width: 5, height: 5, borderRadius: "50%", flexShrink: 0, marginTop: "7px",
+                  width: 5, height: 5, borderRadius: "50%",
+                  flexShrink: 0, marginTop: "7px",
                   background: "rgba(168,139,250,0.65)",
                   boxShadow: "0 0 5px rgba(168,139,250,0.35)",
                 }} />
