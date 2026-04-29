@@ -10,56 +10,28 @@ import RN from "../assets/react-native.svg";
 import TS from "../assets/typescript.svg";
 
 const cardInfo = [
-  {
-    id: 1,
-    img: Html,
-    img2: Css,
-    name: "HTML & CSS",
-    tag: "Markup & Styling",
-    description:
-      "I have an understanding of semantic HTML. Proficient in using pure CSS for element positioning and building mobile-first, responsive layouts. Able to create simple animations to enhance user experience. Committed to continuous learning and regularly exploring new best practices in CSS and modern markup techniques.",
-  },
-  {
-    id: 2,
-    img: JS,
-    name: "JavaScript",
-    tag: "Core Language",
-    description:
-      "Use JavaScript to build interactive web applications, with a solid understanding of core concepts including functions, arrays, objects, closures, and asynchronous programming. Emphasize writing clean, maintainable code and enjoy solving complex problems. Recently focused on using JavaScript with React, while remaining confident in working with vanilla JavaScript when required.",
-  },
-  {
-    id: 3,
-    img: ReactI,
-    name: "React",
-    tag: "UI Framework",
-    description:
-      "Build modern user interfaces using React, with an understanding of component-based architecture, props, state, and React Hooks such as useState and useEffect. Focus on creating reusable components and well-structured project architecture. Consistently apply and strengthen skills through hands-on development in personal projects.",
-  },
-  {
-    id: 4,
-    img: Tail,
-    name: "Tailwind",
-    tag: "CSS Framework",
-    description:
-      "Use Tailwind CSS to build modern and responsive user interfaces quickly. Understand how to compose utility classes to create layouts, spacing, typography, and responsive designs while keeping the code clean and consistent.",
-  },
-  {
-    id: 5,
-    img: RN,
-    name: "React Native",
-    tag: "Mobile",
-    description:
-      "Build cross-platform mobile applications using React Native with Expo. Familiar with Expo Router for navigation, AsyncStorage for local persistence, and native UI components. Apply the same component-based mindset from React to create smooth mobile experiences for iOS and Android.",
-  },
-  {
-    id: 6,
-    img: TS,
-    name: "TypeScript",
-    tag: "Type Safety",
-    description:
-      "Use TypeScript to write safer and more maintainable code. Comfortable with type annotations, interfaces, and generics. Appreciate how TypeScript catches errors early and improves developer experience, especially in larger projects and when working with APIs.",
-  },
+  { id: 1, img: Html, img2: Css, name: "HTML & CSS", tag: "Markup & Styling", description: "I have an understanding of semantic HTML. Proficient in using pure CSS for element positioning and building mobile-first, responsive layouts. Able to create simple animations to enhance user experience. Committed to continuous learning and regularly exploring new best practices in CSS and modern markup techniques." },
+  { id: 2, img: JS, name: "JavaScript", tag: "Core Language", description: "Use JavaScript to build interactive web applications, with a solid understanding of core concepts including functions, arrays, objects, closures, and asynchronous programming. Emphasize writing clean, maintainable code and enjoy solving complex problems. Recently focused on using JavaScript with React, while remaining confident in working with vanilla JavaScript when required." },
+  { id: 3, img: ReactI, name: "React", tag: "UI Framework", description: "Build modern user interfaces using React, with an understanding of component-based architecture, props, state, and React Hooks such as useState and useEffect. Focus on creating reusable components and well-structured project architecture. Consistently apply and strengthen skills through hands-on development in personal projects." },
+  { id: 4, img: Tail, name: "Tailwind", tag: "CSS Framework", description: "Use Tailwind CSS to build modern and responsive user interfaces quickly. Understand how to compose utility classes to create layouts, spacing, typography, and responsive designs while keeping the code clean and consistent." },
+  { id: 5, img: RN, name: "React Native", tag: "Mobile", description: "Build cross-platform mobile applications using React Native with Expo. Familiar with Expo Router for navigation, AsyncStorage for local persistence, and native UI components. Apply the same component-based mindset from React to create smooth mobile experiences for iOS and Android." },
+  { id: 6, img: TS, name: "TypeScript", tag: "Type Safety", description: "Use TypeScript to write safer and more maintainable code. Comfortable with type annotations, interfaces, and generics. Appreciate how TypeScript catches errors early and improves developer experience, especially in larger projects and when working with APIs." },
 ];
+
+const containerVariants = {
+  hidden: {},
+  show: {
+    transition: { staggerChildren: 0.07, delayChildren: 0.1 },
+  },
+};
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 18, scale: 0.95 },
+  show: {
+    opacity: 1, y: 0, scale: 1,
+    transition: { type: "spring", stiffness: 380, damping: 28 },
+  },
+};
 
 const Technologies = () => {
   const [active, setActive] = useState(null);
@@ -67,24 +39,37 @@ const Technologies = () => {
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
-      <div>
+      <motion.div
+        initial={{ opacity: 0, y: 12 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
+      >
         <h2 style={{ color: "rgba(255,255,255,0.9)", fontWeight: 700, fontSize: "1.85rem", letterSpacing: "-0.02em", margin: 0 }}>
           Web Technologies
         </h2>
-        <p style={{ color: "rgba(255,255,255,0.35)", fontSize: "0.9rem", marginTop: "4px", margin: "4px 0 0" }}>
+        <p style={{ color: "rgba(255,255,255,0.35)", fontSize: "0.9rem", margin: "4px 0 0" }}>
           My core stack and development tools
         </p>
-      </div>
+      </motion.div>
 
-      {/* grid: 2 cols mobile → 3 cols sm → 6 cols md */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3">
+      {/* Grid */}
+      <motion.div
+        className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3"
+        variants={containerVariants}
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true, margin: "-40px" }}
+      >
         {cardInfo.map((card) => {
           const isActive = active === card.id;
           return (
             <motion.button
               key={card.id}
+              variants={cardVariants}
               onClick={() => setActive(isActive ? null : card.id)}
-              whileTap={{ scale: 0.95 }}
+              whileTap={{ scale: 0.94 }}
+              whileHover={{ y: -4, transition: { type: "spring", stiffness: 400, damping: 20 } }}
               style={{
                 ...neonCardStyle,
                 borderRadius: "20px",
@@ -100,10 +85,15 @@ const Technologies = () => {
                 outline: "none",
                 width: "100%",
                 touchAction: "manipulation",
-                transition: "all 0.2s ease",
+                boxShadow: isActive
+                  ? "0 8px 32px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.12)"
+                  : neonCardStyle.boxShadow,
               }}
             >
-              <div style={{ position: "relative", width: 44, height: 44 }}>
+              <motion.div
+                style={{ position: "relative", width: 44, height: 44 }}
+                whileHover={{ rotate: [0, -8, 8, 0], transition: { duration: 0.4 } }}
+              >
                 <img src={card.img} alt={card.name} style={{ width: 44, height: 44 }} />
                 {card.img2 && (
                   <img src={card.img2} alt="" style={{
@@ -111,7 +101,7 @@ const Technologies = () => {
                     background: "#121216", borderRadius: "4px", padding: "2px",
                   }} />
                 )}
-              </div>
+              </motion.div>
               <div style={{ textAlign: "center" }}>
                 <div style={{ color: "#fff", fontSize: "0.82rem", fontWeight: 600, lineHeight: 1.3 }}>
                   {card.name}
@@ -123,7 +113,7 @@ const Technologies = () => {
             </motion.button>
           );
         })}
-      </div>
+      </motion.div>
 
       {/* Description panel */}
       <div style={{ minHeight: "110px", position: "relative" }}>
@@ -131,23 +121,24 @@ const Technologies = () => {
           {selected ? (
             <motion.div
               key={selected.id}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.15 }}
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -6 }}
+              transition={{ duration: 0.2, ease: "easeOut" }}
               style={{
-                borderRadius: "20px",
-                padding: "22px 24px",
-                display: "flex",
-                gap: "18px",
-                alignItems: "flex-start",
-                background: "#1a1a1e",
+                borderRadius: "20px", padding: "22px 24px",
+                display: "flex", gap: "18px", alignItems: "flex-start",
+                background: "rgba(255,255,255,0.04)",
                 border: "1px solid rgba(255,255,255,0.1)",
+                backdropFilter: "blur(20px)",
               }}
             >
-              <img
+              <motion.img
                 src={selected.img}
                 alt=""
+                initial={{ scale: 0.7, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ type: "spring", stiffness: 400, damping: 22, delay: 0.05 }}
                 className="hidden sm:block"
                 style={{ width: 38, height: 38, flexShrink: 0, marginTop: 2 }}
               />
@@ -161,15 +152,19 @@ const Technologies = () => {
               </div>
             </motion.div>
           ) : (
-            <div style={{
-              textAlign: "center", padding: "28px",
-              color: "rgba(255,255,255,0.15)",
-              border: "1px dashed rgba(255,255,255,0.08)",
-              borderRadius: "20px",
-              fontSize: "0.9rem",
-            }}>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              style={{
+                textAlign: "center", padding: "28px",
+                color: "rgba(255,255,255,0.15)",
+                border: "1px dashed rgba(255,255,255,0.08)",
+                borderRadius: "20px", fontSize: "0.9rem",
+              }}
+            >
               Select a technology to see details
-            </div>
+            </motion.div>
           )}
         </AnimatePresence>
       </div>

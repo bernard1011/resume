@@ -1,10 +1,12 @@
 import NeonButton from "./NeonButton";
 import { ArrowRight, Smartphone } from "lucide-react";
-import { neonCardStyle, neonHoverHandlers } from "../../utils/neonCard";
+import { motion } from "framer-motion";
+import { neonCardStyle } from "../../utils/neonCard";
 
 const KnowladgeCard = ({ img, name, tag, description, url, badge }) => {
   return (
-    <div
+    <motion.div
+      whileHover={{ y: -5, transition: { type: "spring", stiffness: 340, damping: 22 } }}
       style={{
         ...neonCardStyle,
         borderRadius: "20px",
@@ -14,12 +16,18 @@ const KnowladgeCard = ({ img, name, tag, description, url, badge }) => {
         gap: "14px",
         height: "100%",
         boxSizing: "border-box",
+        cursor: "default",
       }}
-      {...neonHoverHandlers}
+      whileTap={{ scale: 0.99 }}
     >
       {/* Header */}
       <div style={{ display: "flex", alignItems: "center", gap: "14px" }}>
-        <img src={img} alt={name} style={{ width: 56, height: 56, flexShrink: 0, objectFit: "contain" }} />
+        <motion.img
+          src={img}
+          alt={name}
+          whileHover={{ rotate: [0, -10, 10, 0], transition: { duration: 0.5 } }}
+          style={{ width: 56, height: 56, flexShrink: 0, objectFit: "contain" }}
+        />
         <div style={{ flex: 1, minWidth: 0 }}>
           <div style={{ color: "#f1f5f9", fontSize: "1.1rem", fontWeight: 700, marginBottom: "4px" }}>
             {name}
@@ -50,9 +58,11 @@ const KnowladgeCard = ({ img, name, tag, description, url, badge }) => {
       {(url || badge) && (
         <div style={{ display: "flex", gap: "10px", flexWrap: "wrap", paddingTop: "4px" }}>
           {url && (
-            <NeonButton variant="primary" size="sm" href={url} target="_blank" rel="noopener noreferrer">
-              View Project <ArrowRight size={13} />
-            </NeonButton>
+            <motion.div whileHover={{ x: 3 }} transition={{ type: "spring", stiffness: 400, damping: 20 }}>
+              <NeonButton variant="primary" size="sm" href={url} target="_blank" rel="noopener noreferrer">
+                View Project <ArrowRight size={13} />
+              </NeonButton>
+            </motion.div>
           )}
           {badge && (
             <div style={{
@@ -69,7 +79,7 @@ const KnowladgeCard = ({ img, name, tag, description, url, badge }) => {
           )}
         </div>
       )}
-    </div>
+    </motion.div>
   );
 };
 

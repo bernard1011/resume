@@ -1,19 +1,37 @@
+import { motion } from "framer-motion";
 import AiI from "../assets/ai-icon.svg";
 import { neonCardStyle, neonHoverHandlers } from "../utils/neonCard";
 
 const AiUsage = () => {
   return (
     <div className="flex flex-col gap-5">
-      <h2 style={{ color: "rgba(255,255,255,0.9)", fontWeight: 700, fontSize: "1.75rem", letterSpacing: "-0.02em" }}>
+      <motion.h2
+        initial={{ opacity: 0, y: 12 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
+        style={{ color: "rgba(255,255,255,0.9)", fontWeight: 700, fontSize: "1.75rem", letterSpacing: "-0.02em", margin: 0 }}
+      >
         AI Usage
-      </h2>
+      </motion.h2>
 
-      <div style={{ ...neonCardStyle, borderRadius: "20px", padding: "28px", display: "flex", flexDirection: "column", gap: "20px" }}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-40px" }}
+        transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+        style={{ ...neonCardStyle, borderRadius: "20px", padding: "28px", display: "flex", flexDirection: "column", gap: "20px" }}
         {...neonHoverHandlers}
       >
         {/* Header */}
         <div style={{ display: "flex", alignItems: "center", gap: "18px" }}>
-          <img src={AiI} alt="AI" style={{ width: 64, height: 64, flexShrink: 0 }} />
+          <motion.img
+            src={AiI}
+            alt="AI"
+            animate={{ rotate: [0, 360] }}
+            transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+            style={{ width: 64, height: 64, flexShrink: 0 }}
+          />
           <div>
             <h3 style={{ color: "#f1f5f9", fontSize: "1.25rem", fontWeight: 700, margin: "0 0 4px" }}>
               Google & AI Tools
@@ -26,7 +44,6 @@ const AiUsage = () => {
 
         <div style={{ height: "1px", background: "rgba(255,255,255,0.06)" }} />
 
-        {/* Two columns */}
         <div className="md:grid md:grid-cols-2 md:gap-8 flex flex-col gap-4">
           <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
             <p style={{ color: "rgba(209,213,219,0.82)", fontSize: "0.97rem", lineHeight: 1.72, margin: 0 }}>
@@ -45,7 +62,7 @@ const AiUsage = () => {
             </p>
           </div>
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 };
