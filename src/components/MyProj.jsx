@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import useScrollReveal from "../utils/useScrollReveal";
 import ProjSec from "../assets/projsec.svg";
 import RobH from "../assets/robot.svg";
 import SecP from "../assets/htmlcss.svg";
@@ -13,29 +14,20 @@ const myproj = [
   { id: 4, img: SecP, name: "Landing", tag: "HTML · CSS · Netlify", description: "Developed a fully responsive landing page using HTML5 and CSS3. Used Flexbox and Grid for modern layout design. Focused on semantic markup and responsiveness. Deployed the website via Netlify.", url: "https://landingpagebernard.netlify.app/" },
 ];
 
-const containerVariants = {
-  hidden: {},
-  show: { transition: { staggerChildren: 0.1, delayChildren: 0.05 } },
-};
-
-const cardVariants = {
-  hidden: { opacity: 0, y: 24, scale: 0.97 },
-  show: { opacity: 1, y: 0, scale: 1, transition: { type: "spring", stiffness: 320, damping: 26 } },
-};
-
 const MyProj = () => {
+  const [headRef, headVisible] = useScrollReveal();
+  const [gridRef, gridVisible] = useScrollReveal();
+
   return (
     <section style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
       <motion.div
-        initial={{ opacity: 0, y: 14 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.5 }}
+        ref={headRef}
+        animate={headVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 14 }}
+        transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
         style={{ display: "flex", alignItems: "center", gap: "14px" }}
       >
         <motion.img
-          src={ProjSec}
-          alt="my projects"
+          src={ProjSec} alt="my projects"
           animate={{ rotate: [0, 8, -8, 0] }}
           transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
           style={{ width: 48, height: 48 }}
@@ -50,15 +42,13 @@ const MyProj = () => {
         </div>
       </motion.div>
 
-      <motion.div
-        className="grid grid-cols-1 sm:grid-cols-2 gap-4"
-        variants={containerVariants}
-        initial="hidden"
-        whileInView="show"
-        viewport={{ once: true, margin: "-40px" }}
-      >
-        {myproj.map((item) => (
-          <motion.div key={item.id} variants={cardVariants}>
+      <div ref={gridRef} className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        {myproj.map((item, i) => (
+          <motion.div
+            key={item.id}
+            animate={gridVisible ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 24, scale: 0.97 }}
+            transition={{ duration: 0.45, delay: gridVisible ? i * 0.1 : 0, ease: [0.22, 1, 0.36, 1] }}
+          >
             <KnowladgeCard
               img={item.img}
               name={item.name}
@@ -69,7 +59,7 @@ const MyProj = () => {
             />
           </motion.div>
         ))}
-      </motion.div>
+      </div>
     </section>
   );
 };

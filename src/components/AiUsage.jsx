@@ -1,33 +1,27 @@
 import { motion } from "framer-motion";
+import useScrollReveal from "../utils/useScrollReveal";
 import AiI from "../assets/ai-icon.svg";
 import { neonCardStyle, neonHoverHandlers } from "../utils/neonCard";
 
 const AiUsage = () => {
+  const [ref, isVisible] = useScrollReveal();
+
   return (
     <div className="flex flex-col gap-5">
-      <motion.h2
-        initial={{ opacity: 0, y: 12 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.5 }}
-        style={{ color: "rgba(255,255,255,0.9)", fontWeight: 700, fontSize: "1.75rem", letterSpacing: "-0.02em", margin: 0 }}
-      >
+      <h2 style={{ color: "rgba(255,255,255,0.9)", fontWeight: 700, fontSize: "1.75rem", letterSpacing: "-0.02em", margin: 0 }}>
         AI Usage
-      </motion.h2>
+      </h2>
 
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-40px" }}
+        ref={ref}
+        animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
         transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
         style={{ ...neonCardStyle, borderRadius: "20px", padding: "28px", display: "flex", flexDirection: "column", gap: "20px" }}
         {...neonHoverHandlers}
       >
-        {/* Header */}
         <div style={{ display: "flex", alignItems: "center", gap: "18px" }}>
           <motion.img
-            src={AiI}
-            alt="AI"
+            src={AiI} alt="AI"
             animate={{ rotate: [0, 360] }}
             transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
             style={{ width: 64, height: 64, flexShrink: 0 }}

@@ -1,6 +1,7 @@
-import LinuxI from "../assets/linux.svg";
 import { motion } from "framer-motion";
+import LinuxI from "../assets/linux.svg";
 import { neonCardStyle } from "../utils/neonCard";
+import useScrollReveal from "../utils/useScrollReveal";
 
 const skills = [
   "Linux terminal: navigation and command-line tools",
@@ -11,33 +12,21 @@ const skills = [
   "Networking basics: IP configuration, ports, and services",
 ];
 
-const skillsVariants = {
-  hidden: {},
-  show: { transition: { staggerChildren: 0.08, delayChildren: 0.15 } },
-};
-
-const skillItem = {
-  hidden: { opacity: 0, x: -14 },
-  show: { opacity: 1, x: 0, transition: { type: "spring", stiffness: 340, damping: 26 } },
-};
-
 const LibsAndFrameworks = () => {
+  const [cardRef, cardVisible] = useScrollReveal();
+  const [skillsRef, skillsVisible] = useScrollReveal();
+
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
       <motion.h2
-        initial={{ opacity: 0, y: 12 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.5 }}
         style={{ color: "rgba(255,255,255,0.9)", fontWeight: 700, fontSize: "1.75rem", letterSpacing: "-0.02em", margin: 0 }}
       >
         Linux & Networking
       </motion.h2>
 
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-40px" }}
+        ref={cardRef}
+        animate={cardVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
         transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
         style={{ ...neonCardStyle, borderRadius: "20px", padding: "24px", display: "flex", flexDirection: "column", gap: "20px" }}
       >
@@ -52,8 +41,7 @@ const LibsAndFrameworks = () => {
           }}
         >
           <motion.img
-            src={LinuxI}
-            alt="linux"
+            src={LinuxI} alt="linux"
             animate={{ rotate: [0, 5, -5, 0] }}
             transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
             style={{ width: 48, height: 48, flexShrink: 0 }}
@@ -68,7 +56,6 @@ const LibsAndFrameworks = () => {
           </div>
         </motion.div>
 
-        {/* Body */}
         <div className="flex flex-col md:grid md:grid-cols-2 md:gap-6" style={{ gap: "16px" }}>
           <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
             <p style={{ color: "rgba(209,213,219,0.72)", fontSize: "0.95rem", lineHeight: 1.72, margin: 0 }}>
@@ -85,12 +72,8 @@ const LibsAndFrameworks = () => {
             </p>
           </div>
 
-          {/* Skills with stagger */}
-          <motion.div
-            variants={skillsVariants}
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true, margin: "-30px" }}
+          <div
+            ref={skillsRef}
             style={{
               background: "rgba(255,255,255,0.03)",
               border: "1px solid rgba(255,255,255,0.07)",
@@ -101,7 +84,8 @@ const LibsAndFrameworks = () => {
             {skills.map((skill, i) => (
               <motion.div
                 key={i}
-                variants={skillItem}
+                animate={skillsVisible ? { opacity: 1, x: 0 } : { opacity: 0, x: -14 }}
+                transition={{ duration: 0.4, delay: skillsVisible ? i * 0.08 : 0, ease: [0.22, 1, 0.36, 1] }}
                 style={{ display: "flex", alignItems: "flex-start", gap: "10px" }}
               >
                 <motion.div
@@ -114,12 +98,10 @@ const LibsAndFrameworks = () => {
                     boxShadow: "0 0 5px rgba(168,139,250,0.35)",
                   }}
                 />
-                <span style={{ color: "rgba(209,213,219,0.8)", fontSize: "0.9rem", lineHeight: 1.55 }}>
-                  {skill}
-                </span>
+                <span style={{ color: "rgba(209,213,219,0.8)", fontSize: "0.9rem", lineHeight: 1.55 }}>{skill}</span>
               </motion.div>
             ))}
-          </motion.div>
+          </div>
         </div>
       </motion.div>
     </div>

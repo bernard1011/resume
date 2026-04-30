@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { neonCardStyle } from "../utils/neonCard";
+import useScrollReveal from "../utils/useScrollReveal";
 import Html from "../assets/html-icon.svg";
 import Css from "../assets/css-icon.svg";
 import JS from "../assets/js-icon.svg";
@@ -18,32 +19,18 @@ const cardInfo = [
   { id: 6, img: TS, name: "TypeScript", tag: "Type Safety", description: "Use TypeScript to write safer and more maintainable code. Comfortable with type annotations, interfaces, and generics. Appreciate how TypeScript catches errors early and improves developer experience, especially in larger projects and when working with APIs." },
 ];
 
-const containerVariants = {
-  hidden: {},
-  show: {
-    transition: { staggerChildren: 0.07, delayChildren: 0.1 },
-  },
-};
-
-const cardVariants = {
-  hidden: { opacity: 0, y: 18, scale: 0.95 },
-  show: {
-    opacity: 1, y: 0, scale: 1,
-    transition: { type: "spring", stiffness: 380, damping: 28 },
-  },
-};
-
 const Technologies = () => {
   const [active, setActive] = useState(null);
+  const [headRef, headVisible] = useScrollReveal();
+  const [gridRef, gridVisible] = useScrollReveal();
   const selected = active !== null ? cardInfo.find((c) => c.id === active) : null;
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
       <motion.div
-        initial={{ opacity: 0, y: 12 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.5 }}
+        ref={headRef}
+        animate={headVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
+        transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
       >
         <h2 style={{ color: "rgba(255,255,255,0.9)", fontWeight: 700, fontSize: "1.85rem", letterSpacing: "-0.02em", margin: 0 }}>
           Web Technologies
@@ -53,20 +40,18 @@ const Technologies = () => {
         </p>
       </motion.div>
 
-      {/* Grid */}
-      <motion.div
-        className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3"
-        variants={containerVariants}
-        initial="hidden"
-        whileInView="show"
-        viewport={{ once: true, margin: "-40px" }}
-      >
-        {cardInfo.map((card) => {
+      <div ref={gridRef} className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3">
+        {cardInfo.map((card, i) => {
           const isActive = active === card.id;
           return (
             <motion.button
               key={card.id}
-              variants={cardVariants}
+              animate={gridVisible ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 18, scale: 0.95 }}
+              transition={{
+                duration: 0.45,
+                delay: gridVisible ? i * 0.07 : 0,
+                ease: [0.22, 1, 0.36, 1],
+              }}
               onClick={() => setActive(isActive ? null : card.id)}
               whileTap={{ scale: 0.94 }}
               whileHover={{ y: -4, transition: { type: "spring", stiffness: 400, damping: 20 } }}
@@ -103,20 +88,15 @@ const Technologies = () => {
                 )}
               </motion.div>
               <div style={{ textAlign: "center" }}>
-                <div style={{ color: "#fff", fontSize: "0.82rem", fontWeight: 600, lineHeight: 1.3 }}>
-                  {card.name}
-                </div>
-                <div style={{ color: "rgba(255,255,255,0.3)", fontSize: "0.68rem", textTransform: "uppercase", letterSpacing: "0.04em", marginTop: "2px" }}>
-                  {card.tag}
-                </div>
+                <div style={{ color: "#fff", fontSize: "0.82rem", fontWeight: 600, lineHeight: 1.3 }}>{card.name}</div>
+                <div style={{ color: "rgba(255,255,255,0.3)", fontSize: "0.68rem", textTransform: "uppercase", letterSpacing: "0.04em", marginTop: "2px" }}>{card.tag}</div>
               </div>
             </motion.button>
           );
         })}
-      </motion.div>
+      </div>
 
-      {/* Description panel */}
-      <div style={{ minHeight: "110px", position: "relative" }}>
+      <div style={{ minHeight: "110px" }}>
         <AnimatePresence mode="wait">
           {selected ? (
             <motion.div
@@ -124,7 +104,7 @@ const Technologies = () => {
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -6 }}
-              transition={{ duration: 0.2, ease: "easeOut" }}
+              transition={{ duration: 0.2 }}
               style={{
                 borderRadius: "20px", padding: "22px 24px",
                 display: "flex", gap: "18px", alignItems: "flex-start",
@@ -134,8 +114,7 @@ const Technologies = () => {
               }}
             >
               <motion.img
-                src={selected.img}
-                alt=""
+                src={selected.img} alt=""
                 initial={{ scale: 0.7, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 transition={{ type: "spring", stiffness: 400, damping: 22, delay: 0.05 }}
@@ -143,25 +122,14 @@ const Technologies = () => {
                 style={{ width: 38, height: 38, flexShrink: 0, marginTop: 2 }}
               />
               <div>
-                <h3 style={{ color: "#fff", fontWeight: 700, fontSize: "1.1rem", margin: "0 0 8px" }}>
-                  {selected.name}
-                </h3>
-                <p style={{ color: "rgba(255,255,255,0.65)", fontSize: "0.95rem", lineHeight: 1.65, margin: 0 }}>
-                  {selected.description}
-                </p>
+                <h3 style={{ color: "#fff", fontWeight: 700, fontSize: "1.1rem", margin: "0 0 8px" }}>{selected.name}</h3>
+                <p style={{ color: "rgba(255,255,255,0.65)", fontSize: "0.95rem", lineHeight: 1.65, margin: 0 }}>{selected.description}</p>
               </div>
             </motion.div>
           ) : (
             <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              style={{
-                textAlign: "center", padding: "28px",
-                color: "rgba(255,255,255,0.15)",
-                border: "1px dashed rgba(255,255,255,0.08)",
-                borderRadius: "20px", fontSize: "0.9rem",
-              }}
+              initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+              style={{ textAlign: "center", padding: "28px", color: "rgba(255,255,255,0.15)", border: "1px dashed rgba(255,255,255,0.08)", borderRadius: "20px", fontSize: "0.9rem" }}
             >
               Select a technology to see details
             </motion.div>
