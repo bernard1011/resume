@@ -1,5 +1,5 @@
+import { useRef, useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import useScrollReveal from "../utils/useScrollReveal";
 
 const contacts = [
   { id: 1, label: "Telegram", value: "@lobodindanya", href: "https://t.me/lobodindanya", icon: (<svg viewBox="0 0 24 24" fill="currentColor" style={{ width: 22, height: 22 }}><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>) },
@@ -9,21 +9,27 @@ const contacts = [
 ];
 
 const Contact = () => {
-  const [headRef, headVisible] = useScrollReveal();
-  const [listRef, listVisible] = useScrollReveal();
+  const [listVisible, setListVisible] = useState(false);
+  const listRef = useRef(null);
+
+  useEffect(() => {
+    const el = listRef.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    if (rect.top < window.innerHeight) { setListVisible(true); return; }
+    const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) { setListVisible(true); obs.disconnect(); } }, { threshold: 0.05 });
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
 
   return (
     <section className="flex flex-col gap-6 pb-16">
-      <motion.div
-        ref={headRef}
-        animate={headVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 14 }}
-        transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-      >
+      <div>
         <h2 className="text-gray-50 font-bold text-3xl">Contact Me</h2>
         <p style={{ color: "rgba(209,213,219,0.75)", fontSize: "1.05rem", lineHeight: 1.6, marginTop: "8px" }}>
           Feel free to reach out — I'm always open to new opportunities and conversations.
         </p>
-      </motion.div>
+      </div>
 
       <div ref={listRef} className="flex flex-col gap-3">
         {contacts.map((contact, i) => (
@@ -32,8 +38,7 @@ const Contact = () => {
             href={contact.href}
             target="_blank"
             rel="noopener noreferrer"
-            animate={listVisible ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
-            transition={{ duration: 0.4, delay: listVisible ? i * 0.09 : 0, ease: [0.22, 1, 0.36, 1] }}
+            className="stagger-left stagger-item"
             whileHover={{ x: 6, transition: { type: "spring", stiffness: 380, damping: 22 } }}
             whileTap={{ scale: 0.98 }}
             style={{
@@ -43,39 +48,22 @@ const Contact = () => {
               border: "1px solid rgba(255,255,255,0.09)",
               backdropFilter: "blur(16px)",
               textDecoration: "none", cursor: "pointer",
-              transition: "border-color 0.2s, box-shadow 0.2s",
+              transitionDelay: listVisible ? `${i * 0.09}s` : "0s",
+              transition: `opacity 0.4s cubic-bezier(0.22,1,0.36,1) ${listVisible ? i * 0.09 : 0}s, transform 0.4s cubic-bezier(0.22,1,0.36,1) ${listVisible ? i * 0.09 : 0}s, border-color 0.2s, box-shadow 0.2s`,
             }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.borderColor = "rgba(255,255,255,0.2)";
-              e.currentTarget.style.boxShadow = "0 8px 32px rgba(0,0,0,0.4)";
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.borderColor = "rgba(255,255,255,0.09)";
-              e.currentTarget.style.boxShadow = "none";
-            }}
+            onMouseEnter={(e) => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.2)"; e.currentTarget.style.boxShadow = "0 8px 32px rgba(0,0,0,0.4)"; }}
+            onMouseLeave={(e) => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.09)"; e.currentTarget.style.boxShadow = "none"; }}
           >
             <motion.div
               whileHover={{ rotate: [0, -12, 12, 0], transition: { duration: 0.4 } }}
-              style={{
-                width: 44, height: 44, borderRadius: "50%", flexShrink: 0,
-                background: "rgba(255,255,255,0.06)",
-                border: "1px solid rgba(255,255,255,0.12)",
-                display: "flex", alignItems: "center", justifyContent: "center",
-                color: "rgba(255,255,255,0.85)",
-              }}
+              style={{ width: 44, height: 44, borderRadius: "50%", flexShrink: 0, background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.12)", display: "flex", alignItems: "center", justifyContent: "center", color: "rgba(255,255,255,0.85)" }}
             >
               {contact.icon}
             </motion.div>
-
             <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
-              <span style={{ fontSize: "0.72rem", fontWeight: 600, letterSpacing: "0.09em", textTransform: "uppercase", color: "rgba(255,255,255,0.4)" }}>
-                {contact.label}
-              </span>
-              <span style={{ fontSize: "0.95rem", fontWeight: 600, color: "#f1f5f9" }}>
-                {contact.value}
-              </span>
+              <span style={{ fontSize: "0.72rem", fontWeight: 600, letterSpacing: "0.09em", textTransform: "uppercase", color: "rgba(255,255,255,0.4)" }}>{contact.label}</span>
+              <span style={{ fontSize: "0.95rem", fontWeight: 600, color: "#f1f5f9" }}>{contact.value}</span>
             </div>
-
             <motion.svg
               viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"
               style={{ width: 18, height: 18, marginLeft: "auto", color: "rgba(255,255,255,0.35)", flexShrink: 0 }}

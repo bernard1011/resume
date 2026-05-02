@@ -1,24 +1,15 @@
 import { motion } from "framer-motion";
-import useScrollReveal from "../utils/useScrollReveal";
 import AiI from "../assets/ai-icon.svg";
 import { neonCardStyle, neonHoverHandlers } from "../utils/neonCard";
 
 const AiUsage = () => {
-  const [ref, isVisible] = useScrollReveal();
-
   return (
     <div className="flex flex-col gap-5">
       <h2 style={{ color: "rgba(255,255,255,0.9)", fontWeight: 700, fontSize: "1.75rem", letterSpacing: "-0.02em", margin: 0 }}>
         AI Usage
       </h2>
 
-      <motion.div
-        ref={ref}
-        animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-        transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-        style={{ ...neonCardStyle, borderRadius: "20px", padding: "28px", display: "flex", flexDirection: "column", gap: "20px" }}
-        {...neonHoverHandlers}
-      >
+      <div style={{ ...neonCardStyle, borderRadius: "20px", padding: "28px", display: "flex", flexDirection: "column", gap: "20px" }} {...neonHoverHandlers}>
         <div style={{ display: "flex", alignItems: "center", gap: "18px" }}>
           <motion.img
             src={AiI} alt="AI"
@@ -27,12 +18,8 @@ const AiUsage = () => {
             style={{ width: 64, height: 64, flexShrink: 0 }}
           />
           <div>
-            <h3 style={{ color: "#f1f5f9", fontSize: "1.25rem", fontWeight: 700, margin: "0 0 4px" }}>
-              Google & AI Tools
-            </h3>
-            <p style={{ color: "rgba(156,163,175,0.85)", fontSize: "0.88rem", margin: 0 }}>
-              Claude · ChatGPT · Gemini
-            </p>
+            <h3 style={{ color: "#f1f5f9", fontSize: "1.25rem", fontWeight: 700, margin: "0 0 4px" }}>Google & AI Tools</h3>
+            <p style={{ color: "rgba(156,163,175,0.85)", fontSize: "0.88rem", margin: 0 }}>Claude · ChatGPT · Gemini</p>
           </div>
         </div>
 
@@ -56,7 +43,7 @@ const AiUsage = () => {
             </p>
           </div>
         </div>
-      </motion.div>
+      </div>
     </div>
   );
 };

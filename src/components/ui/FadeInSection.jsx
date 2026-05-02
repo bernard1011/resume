@@ -1,44 +1,40 @@
 import { useRef, useEffect, useState } from "react";
-import { motion, useReducedMotion } from "framer-motion";
 
-const FadeInSection = ({ children, delay = 0 }) => {
+const FadeInSection = ({ children, delay = 0, className = "" }) => {
   const ref = useRef(null);
-  const [isVisible, setIsVisible] = useState(false);
-  const shouldReduce = useReducedMotion();
+  const [visible, setVisible] = useState(false);
 
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
 
+    const rect = el.getBoundingClientRect();
+    if (rect.top < window.innerHeight) {
+      setVisible(true);
+      return;
+    }
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          setIsVisible(true);
+          setVisible(true);
           observer.disconnect();
         }
       },
-      { threshold: 0.08, rootMargin: "-40px" }
+      { threshold: 0.05, rootMargin: "-20px" }
     );
-
     observer.observe(el);
     return () => observer.disconnect();
   }, []);
 
-  if (shouldReduce) return <>{children}</>;
-
   return (
-    <motion.div
+    <div
       ref={ref}
-      animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 22 }}
-      transition={{
-        duration: 0.6,
-        delay: isVisible ? delay : 0,
-        ease: [0.22, 1, 0.36, 1],
-      }}
-      style={{ willChange: "opacity, transform" }}
+      className={`reveal-hidden ${visible ? "reveal-visible" : ""} ${className}`}
+      style={{ transitionDelay: delay ? `${delay}s` : undefined }}
     >
       {children}
-    </motion.div>
+    </div>
   );
 };
 
