@@ -20,18 +20,18 @@ const cardInfo = [
 
 const Technologies = () => {
   const [active, setActive] = useState(null);
-  const [gridVisible, setGridVisible] = useState(false);
-  const gridRef = useRef(null);
-  const selected = active !== null ? cardInfo.find((c) => c.id === active) : null;
+  const [show, setShow] = useState(false);
+  const ref = useRef(null);
+  const selected = cardInfo.find((c) => c.id === active) ?? null;
 
   useEffect(() => {
-    const el = gridRef.current;
+    const el = ref.current;
     if (!el) return;
-    const rect = el.getBoundingClientRect();
-    if (rect.top < window.innerHeight) { setGridVisible(true); return; }
-    const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) { setGridVisible(true); obs.disconnect(); } }, { threshold: 0.05 });
-    obs.observe(el);
-    return () => obs.disconnect();
+    const { top } = el.getBoundingClientRect();
+    if (top < window.innerHeight - 40) { setShow(true); return; }
+    const io = new IntersectionObserver(([e]) => { if (e.isIntersecting) { setShow(true); io.disconnect(); } }, { threshold: 0.05 });
+    io.observe(el);
+    return () => io.disconnect();
   }, []);
 
   return (
@@ -41,54 +41,53 @@ const Technologies = () => {
         <p style={{ color: "rgba(255,255,255,0.35)", fontSize: "0.9rem", margin: "4px 0 0" }}>My core stack and development tools</p>
       </div>
 
-      <div ref={gridRef} className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3">
+      <div ref={ref} className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3">
         {cardInfo.map((card, i) => {
           const isActive = active === card.id;
           return (
             <motion.button
               key={card.id}
-              className="stagger-item"
+              initial={false}
+              animate={show ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 16, scale: 0.96 }}
+              transition={{ duration: 0.45, delay: show ? i * 0.07 : 0, ease: [0.22, 1, 0.36, 1] }}
+              whileHover={{ y: -5, scale: 1.04, transition: { type: "spring", stiffness: 380, damping: 22 } }}
+              whileTap={{ scale: 0.95 }}
               onClick={() => setActive(isActive ? null : card.id)}
-              whileTap={{ scale: 0.94 }}
-              whileHover={{ y: -4, transition: { type: "spring", stiffness: 400, damping: 20 } }}
               style={{
                 ...neonCardStyle,
                 borderRadius: "20px", padding: "20px 10px",
                 display: "flex", flexDirection: "column", alignItems: "center", gap: "10px",
                 cursor: "pointer", border: "1px solid", outline: "none", width: "100%", touchAction: "manipulation",
-                borderColor: isActive ? "rgba(255,255,255,0.28)" : "rgba(255,255,255,0.08)",
-                background: isActive ? "rgba(255,255,255,0.11)" : "rgba(255,255,255,0.04)",
-                transitionDelay: gridVisible ? `${i * 0.07}s` : "0s",
+                borderColor: isActive ? "rgba(255,255,255,0.28)" : "rgba(255,255,255,0.09)",
+                background: isActive ? "rgba(255,255,255,0.1)" : "rgba(255,255,255,0.04)",
+                boxShadow: isActive ? "0 0 0 1px rgba(255,255,255,0.08) inset, 0 8px 32px rgba(0,0,0,0.4)" : neonCardStyle.boxShadow,
               }}
             >
-              <motion.div
-                style={{ position: "relative", width: 44, height: 44 }}
-                whileHover={{ rotate: [0, -8, 8, 0], transition: { duration: 0.4 } }}
-              >
+              <div style={{ position: "relative", width: 44, height: 44 }}>
                 <img src={card.img} alt={card.name} style={{ width: 44, height: 44 }} />
                 {card.img2 && (
-                  <img src={card.img2} alt="" style={{ width: 22, height: 22, position: "absolute", bottom: -4, right: -10, background: "#121216", borderRadius: "4px", padding: "2px" }} />
+                  <img src={card.img2} alt="" style={{ width: 22, height: 22, position: "absolute", bottom: -4, right: -10, background: "#121216", borderRadius: 4, padding: 2 }} />
                 )}
-              </motion.div>
+              </div>
               <div style={{ textAlign: "center" }}>
                 <div style={{ color: "#fff", fontSize: "0.82rem", fontWeight: 600, lineHeight: 1.3 }}>{card.name}</div>
-                <div style={{ color: "rgba(255,255,255,0.3)", fontSize: "0.68rem", textTransform: "uppercase", letterSpacing: "0.04em", marginTop: "2px" }}>{card.tag}</div>
+                <div style={{ color: "rgba(255,255,255,0.3)", fontSize: "0.68rem", textTransform: "uppercase", letterSpacing: "0.04em", marginTop: 2 }}>{card.tag}</div>
               </div>
             </motion.button>
           );
         })}
       </div>
 
-      <div style={{ minHeight: "110px" }}>
+      <div style={{ minHeight: 110 }}>
         <AnimatePresence mode="wait">
           {selected ? (
             <motion.div
               key={selected.id}
-              initial={{ opacity: 0, y: 8 }}
+              initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -6 }}
-              transition={{ duration: 0.2 }}
-              style={{ borderRadius: "20px", padding: "22px 24px", display: "flex", gap: "18px", alignItems: "flex-start", background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.1)", backdropFilter: "blur(20px)" }}
+              exit={{ opacity: 0, y: -8 }}
+              transition={{ duration: 0.22, ease: "easeOut" }}
+              style={{ borderRadius: 20, padding: "22px 24px", display: "flex", gap: 18, alignItems: "flex-start", ...neonCardStyle, border: "1px solid rgba(255,255,255,0.12)" }}
             >
               <img src={selected.img} alt="" className="hidden sm:block" style={{ width: 38, height: 38, flexShrink: 0, marginTop: 2 }} />
               <div>
@@ -98,8 +97,10 @@ const Technologies = () => {
             </motion.div>
           ) : (
             <motion.div
+              key="placeholder"
               initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-              style={{ textAlign: "center", padding: "28px", color: "rgba(255,255,255,0.15)", border: "1px dashed rgba(255,255,255,0.08)", borderRadius: "20px", fontSize: "0.9rem" }}
+              transition={{ duration: 0.18 }}
+              style={{ textAlign: "center", padding: 28, color: "rgba(255,255,255,0.14)", border: "1px dashed rgba(255,255,255,0.08)", borderRadius: 20, fontSize: "0.9rem" }}
             >
               Select a technology to see details
             </motion.div>

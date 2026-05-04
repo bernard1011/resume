@@ -5,11 +5,7 @@ body {
   padding: 0 10px;
   min-height: 100vh;
 }
-
-@media (min-width: 768px) {
-  body { padding: 0 24px; }
-}
-
+@media (min-width: 768px) { body { padding: 0 24px; } }
 html { scroll-behavior: smooth; }
 
 /* Carousel */
@@ -17,72 +13,18 @@ html { scroll-behavior: smooth; }
 @keyframes slideInLeft   { from { transform: translateX(-100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
 @keyframes slideOutLeft  { from { transform: translateX(0); opacity: 1; } to { transform: translateX(-100%); opacity: 0; } }
 @keyframes slideOutRight { from { transform: translateX(0); opacity: 1; } to { transform: translateX(100%); opacity: 0; } }
-
 .slide-in-right  { animation: slideInRight  0.3s ease-out; }
 .slide-in-left   { animation: slideInLeft   0.3s ease-out; }
 .slide-out-left  { animation: slideOutLeft  0.3s ease-out forwards; }
 .slide-out-right { animation: slideOutRight 0.3s ease-out forwards; }
 
-/* Scroll arrows bounce */
+/* Scroll arrows */
 @keyframes bounceFade {
   0%, 100% { opacity: 0.2; transform: translateY(-4px); }
   50%       { opacity: 1;   transform: translateY(4px); }
 }
 .arrows-animate path:nth-child(1) { animation: bounceFade 1.5s ease-in-out infinite; }
 .arrows-animate path:nth-child(2) { animation: bounceFade 1.5s ease-in-out infinite; animation-delay: 200ms; }
-
-/* ─── Scroll reveal — CSS only, no flicker ─── */
-/* Default: visible (SSR, no-JS, Firefox, Safari) */
-.reveal {
-  opacity: 1;
-  transform: none;
-  transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1),
-              transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-/* Only hide AFTER js is ready — set by App on mount */
-.js-ready .reveal-hidden {
-  opacity: 0;
-  transform: translateY(20px);
-}
-.js-ready .reveal-hidden.reveal-visible {
-  opacity: 1;
-  transform: none;
-}
-
-/* Stagger children */
-.js-ready .reveal-hidden.reveal-visible .stagger-item:nth-child(1) { transition-delay: 0.05s; }
-.js-ready .reveal-hidden.reveal-visible .stagger-item:nth-child(2) { transition-delay: 0.12s; }
-.js-ready .reveal-hidden.reveal-visible .stagger-item:nth-child(3) { transition-delay: 0.19s; }
-.js-ready .reveal-hidden.reveal-visible .stagger-item:nth-child(4) { transition-delay: 0.26s; }
-.js-ready .reveal-hidden.reveal-visible .stagger-item:nth-child(5) { transition-delay: 0.33s; }
-.js-ready .reveal-hidden.reveal-visible .stagger-item:nth-child(6) { transition-delay: 0.40s; }
-
-.stagger-item {
-  opacity: 1;
-  transform: none;
-  transition: opacity 0.45s cubic-bezier(0.22, 1, 0.36, 1),
-              transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.js-ready .reveal-hidden .stagger-item {
-  opacity: 0;
-  transform: translateY(16px);
-}
-.js-ready .reveal-hidden.reveal-visible .stagger-item {
-  opacity: 1;
-  transform: none;
-}
-
-/* Slide from left stagger (Contact) */
-.js-ready .reveal-hidden .stagger-left {
-  opacity: 0;
-  transform: translateX(-18px);
-}
-.js-ready .reveal-hidden.reveal-visible .stagger-left {
-  opacity: 1;
-  transform: none;
-}
 
 /* Responsive grids */
 @media (min-width: 640px) {

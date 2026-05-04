@@ -1,40 +1,39 @@
 import { useRef, useEffect, useState } from "react";
+import { motion } from "framer-motion";
 
-const FadeInSection = ({ children, delay = 0, className = "" }) => {
+// Single source of truth for scroll reveal — pure framer, no CSS classes
+const FadeInSection = ({ children, delay = 0 }) => {
   const ref = useRef(null);
-  const [visible, setVisible] = useState(false);
+  const [show, setShow] = useState(false);
 
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
 
-    const rect = el.getBoundingClientRect();
-    if (rect.top < window.innerHeight) {
-      setVisible(true);
+    // Already visible on mount? Show immediately without animation delay
+    const { top } = el.getBoundingClientRect();
+    if (top < window.innerHeight - 40) {
+      setShow(true);
       return;
     }
 
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setVisible(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.05, rootMargin: "-20px" }
+    const io = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) { setShow(true); io.disconnect(); } },
+      { threshold: 0.08 }
     );
-    observer.observe(el);
-    return () => observer.disconnect();
+    io.observe(el);
+    return () => io.disconnect();
   }, []);
 
   return (
-    <div
+    <motion.div
       ref={ref}
-      className={`reveal-hidden ${visible ? "reveal-visible" : ""} ${className}`}
-      style={{ transitionDelay: delay ? `${delay}s` : undefined }}
+      initial={false}
+      animate={show ? { opacity: 1, y: 0 } : { opacity: 0, y: 28 }}
+      transition={{ duration: 0.6, delay: show ? delay : 0, ease: [0.22, 1, 0.36, 1] }}
     >
       {children}
-    </div>
+    </motion.div>
   );
 };
 

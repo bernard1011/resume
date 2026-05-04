@@ -15,24 +15,24 @@ const myproj = [
 ];
 
 const MyProj = () => {
-  const [gridVisible, setGridVisible] = useState(false);
-  const gridRef = useRef(null);
+  const [show, setShow] = useState(false);
+  const ref = useRef(null);
 
   useEffect(() => {
-    const el = gridRef.current;
+    const el = ref.current;
     if (!el) return;
-    const rect = el.getBoundingClientRect();
-    if (rect.top < window.innerHeight) { setGridVisible(true); return; }
-    const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) { setGridVisible(true); obs.disconnect(); } }, { threshold: 0.05 });
-    obs.observe(el);
-    return () => obs.disconnect();
+    const { top } = el.getBoundingClientRect();
+    if (top < window.innerHeight - 40) { setShow(true); return; }
+    const io = new IntersectionObserver(([e]) => { if (e.isIntersecting) { setShow(true); io.disconnect(); } }, { threshold: 0.05 });
+    io.observe(el);
+    return () => io.disconnect();
   }, []);
 
   return (
-    <section style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
-      <div style={{ display: "flex", alignItems: "center", gap: "14px" }}>
+    <section style={{ display: "flex", flexDirection: "column", gap: 20 }}>
+      <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
         <motion.img
-          src={ProjSec} alt="my projects"
+          src={ProjSec} alt=""
           animate={{ rotate: [0, 8, -8, 0] }}
           transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
           style={{ width: 48, height: 48 }}
@@ -43,15 +43,17 @@ const MyProj = () => {
         </div>
       </div>
 
-      <div ref={gridRef} className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div ref={ref} className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         {myproj.map((item, i) => (
-          <div
+          <motion.div
             key={item.id}
-            className="stagger-item"
-            style={{ transitionDelay: gridVisible ? `${i * 0.1}s` : "0s" }}
+            initial={false}
+            animate={show ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 22, scale: 0.97 }}
+            transition={{ duration: 0.5, delay: show ? i * 0.1 : 0, ease: [0.22, 1, 0.36, 1] }}
+            style={{ height: "100%" }}
           >
             <KnowladgeCard img={item.img} name={item.name} tag={item.tag} description={item.description} url={item.url} badge={item.badge} />
-          </div>
+          </motion.div>
         ))}
       </div>
     </section>
